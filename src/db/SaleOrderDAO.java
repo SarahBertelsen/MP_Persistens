@@ -1,5 +1,7 @@
 package db;
 
-public interface SaleOrderDAO {
+import model.SaleOrder;
 
+public interface SaleOrderDAO {
+	public SaleOrder findSaleOrderById(SaleOrder saleOrder);
 }
