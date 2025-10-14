@@ -9,7 +9,7 @@ public class CustomerCtrl implements CustomerCtrlIF {
 	
 	@Override
 	public Customer findCustomerById(int customerId) {
-		// TODO Auto-generated method stub
+		// customerDao.findCustomerById(customerId);
 		return null;
 	}
 

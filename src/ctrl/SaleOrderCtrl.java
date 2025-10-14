@@ -34,8 +34,8 @@ public class SaleOrderCtrl implements SaleOrderCtrlIF{
 	}
 
 	@Override
-	public void confirmOrder() {
-		// TODO Auto-generated method stub
+	public void confirmOrder(SaleOrder saleOrder) {
+		// saleOrderDao.saveOrder(saleOrder);
 		
 	}
 

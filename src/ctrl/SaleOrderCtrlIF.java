@@ -14,5 +14,5 @@ public interface SaleOrderCtrlIF {
 	
 	public SaleOrder addDeliveryDetails(String method, LocalDate deliveryDate, String address);
 	
-	public void confirmOrder();
+	public void confirmOrder(SaleOrder saleOrder);
 }

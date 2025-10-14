@@ -9,7 +9,7 @@ public class ProductCtrl implements ProductCtrlIF {
 
 	@Override
 	public Product findProductById(int productId) {
-		// TODO Auto-generated method stub
+		//return productDao.findProductById(productId);
 		return null;
 	}
 	
