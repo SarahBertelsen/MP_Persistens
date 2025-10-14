@@ -1,5 +1,7 @@
 package db;
 
-public interface ProductDAO {
+import model.Product;
 
+public interface ProductDAO {
+	public Product findProductById(Product product);
 }
