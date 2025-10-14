@@ -1,5 +1,7 @@
 package db;
 
-public interface CustomerDAO {
+import model.Customer;
 
+public interface CustomerDAO {
+	public Customer findCustomerById(Customer customer);
 }
