@@ -35,7 +35,7 @@ public class FreightDB implements FreightDAO{
 		}
 	
 	@Override
-	public void insertFreight(Freight freight) throws SQLException {
+	public void addFreight(Freight freight) throws SQLException {
 		insertPS.setString(1, freight.getMethod());
 		insertPS.setDate(2, java.sql.Date.valueOf(freight.getDeliveryDate()));
 		insertPS.setString(3,  freight.getAddress());

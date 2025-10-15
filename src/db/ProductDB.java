@@ -1,6 +1,5 @@
 package db;
 
-import model.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,7 +8,7 @@ import java.sql.Statement;
 import model.Product;
 
 public class ProductDB {
-	private static final String PS_INSERT = "INSERT INTO Product VALUES (?, ?, ?)";
+	private static final String INSERT_Q = "INSERT INTO Product VALUES (?, ?, ?)";
 	private static final String FIND_BY_ID_Q = "SELECT * FROM Product WHERE ProductId = ?";
 
 	private PreparedStatement insertPS;
@@ -21,7 +20,7 @@ public class ProductDB {
 
 	private void initPreparedStatement() throws SQLException {
 		Connection connection = DBConnection.getInstance().getConnection();
-		insertPS = connection.prepareStatement(PS_INSERT, Statement.RETURN_GENERATED_KEYS);
+		insertPS = connection.prepareStatement(INSERT_Q, Statement.RETURN_GENERATED_KEYS);
 		selectByIdPS = connection.prepareStatement(FIND_BY_ID_Q);
 	}
 

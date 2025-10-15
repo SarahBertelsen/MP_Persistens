@@ -36,7 +36,7 @@ public class DiscountDB implements DiscountDAO {
 	}
 	
 	@Override
-	public void insertDiscount(Discount discount) throws SQLException{
+	public void addDiscount(Discount discount) throws SQLException{
 		insertPS.setString(1, discount.getType());
 		insertPS.setInt(2, discount.getAmount());
 		insertPS.setInt(3, discount.getTreshold());
