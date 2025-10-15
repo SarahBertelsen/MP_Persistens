@@ -3,5 +3,5 @@ package db;
 import model.SaleOrder;
 
 public interface SaleOrderDAO {
-	public SaleOrder findSaleOrderById(SaleOrder saleOrder);
+	public SaleOrder addSaleOrder(SaleOrder saleOrder);
 }

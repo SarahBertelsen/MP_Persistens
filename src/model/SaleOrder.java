@@ -6,23 +6,49 @@ public class SaleOrder {
 	
 	private List<OrderLineItem> orderLines;
 	private Invoice invoice;
-	private int freight;
+	private Freight freight;
 	private Discount discount;
 	private Customer customer;
+	private double amount;
 	
-	public SaleOrder() {
-		
+	public List<OrderLineItem> getOrderLines() {
+		return orderLines;
+	}
+
+	public void addOrderLine(List<OrderLineItem> orderLines) {
+		orderLines.add(orderLines);
+	}
+
+	public Invoice getInvoice() {
+		return invoice;
+	}
+
+	public void setInvoice(Invoice invoice) {
+		this.invoice = invoice;
+	}
+
+	public Freight getFreight() {
+		return freight;
+	}
+
+	public void setFreight(Freight freight) {
+		this.freight = freight;
+	}
+
+	public Discount getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Discount discount) {
+		this.discount = discount;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 	
-	private void addCustomer(Customer customer) {
-		
-	}
-	
-	private void addProductToSaleOrder(Product product, int qty) {
-		
-	}
-	
-	private void addDeliveryDetails(String method, LocalDate deliveryDate, String address) {
-		
-	}
 }

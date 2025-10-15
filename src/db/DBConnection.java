@@ -8,11 +8,11 @@ public class DBConnection {
 	private static DBConnection uniqueInstance; 	
 	private Connection connection = null;
 
-	private static final String DBNAME = "";
-	private static final String SERVERNAME = "";
-	private static final String PORTNUMBER = "";
-	private static final String USERNAME = "";
-	private static final String PASSWORD = "*";
+	private static final String DBNAME = "DMA-CSD-V251_10669007";
+	private static final String SERVERNAME = "hildur.ucn.dk";
+	private static final String PORTNUMBER = "1433";
+	private static final String USERNAME = "DMA-CSD-V251_10669007";
+	private static final String PASSWORD = "Password1!";
 
 	private DBConnection() {
 		String urlString = String.format("jdbc:sqlserver://%s:%s;databaseName=%s;encrypt=false", SERVERNAME, PORTNUMBER,

@@ -6,13 +6,15 @@ import model.SaleOrder;
 
 public interface SaleOrderCtrlIF {
 	
-	public SaleOrder createOrder();
+	public SaleOrder createSaleOrder();
 	
-	public SaleOrder addCustomerToSaleOrder();
+	public SaleOrder addCustomerToSaleOrder(int customerID);
 	
-	public SaleOrder addProductToSaleOrder();
+	public SaleOrder addProductToSaleOrder(int productID, int qty);
 	
-	public SaleOrder addDeliveryDetails(String method, LocalDate deliveryDate, String address);
+	public SaleOrder addFreightToSaleOrder(String method, LocalDate deliveryDate, String address);
+	
+	public void addDiscountToSaleOrder();
 	
 	public void confirmOrder(SaleOrder saleOrder);
 }

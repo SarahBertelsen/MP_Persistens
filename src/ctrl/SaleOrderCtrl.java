@@ -2,41 +2,84 @@ package ctrl;
 
 import java.time.LocalDate;
 
+import db.CustomerDAO;
+import db.DBConnection;
 import db.SaleOrderDAO;
+import model.Customer;
+import model.Product;
 import model.SaleOrder;
 
 public class SaleOrderCtrl implements SaleOrderCtrlIF{
+	private SaleOrder currentOrder;
+	
+	private CustomerCtrl customerCtrl;
+	private ProductCtrl productCtrl;
+	
+	private SaleOrderDAO saleOrderDAO;
+	private CustomerDAO customerDAO;
+	private FreightDAO freightDAO;
+	private DiscountDAO discountDAO;
+	private OrderLineItemDAO orderLineItemDAO;
+	
+	private DBConnection dbConnection;
 
-	private SaleOrderDAO saleOrderDao;
+	public SaleOrderCtrl() {
+		customerCtrl = new CustomerCtrl();
+		productCtrl = new ProductCtrl();
+		saleOrderDAO = new SaleOrderDB();
+		customerDAO = new CustomerDB();
+		freightDAO = new FreightDB();
+		discountDAO = new DiscountDB();
+		
+		dbConnection = DBConnection.getInstance();
+	}
 	
 	@Override
-	public SaleOrder createOrder() {
-		// TODO Auto-generated method stub
-		return null;
+	public SaleOrder addCustomerToSaleOrder(int customerId) {
+		Customer customer = customerCtrl.findCustomerById(customerId);
+		currentOrder.addCustomer(customer);
+		return currentOrder;
 	}
 
 	@Override
-	public SaleOrder addCustomerToSaleOrder() {
-		// TODO Auto-generated method stub
-		return null;
+	public SaleOrder addProductToSaleOrder(int productId, int qty) {
+		Product product = productController.findById(productId);
+		currentOrder.addProductToSaleOrder(product, qty);
+		return currentOrder;
 	}
 
 	@Override
-	public SaleOrder addProductToSaleOrder() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public SaleOrder addDeliveryDetails(String method, LocalDate deliveryDate, String address) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void confirmOrder(SaleOrder saleOrder) {
-		// saleOrderDao.saveOrder(saleOrder);
+	public boolean confirmOrder(SaleOrder saleOrder) {
+		dbConnection.startTransaction();
+		saleOrderDAO.insertOrder(currentOrder);
+		orderLineItemDAO.insertOrderLineItem(orderLineItem);
+		boolean success = productCtrl.removeFromStock(saleOrder);
 		
+		if (success) {
+			dbConnection.commitTransaction();
+		} else {
+			dbConnection.rollbackTransaction();
+		}
+		
+		return success;
+	}
+
+	@Override
+	public SaleOrder createSaleOrder() {
+		currentOrder = new SaleOrder();
+		return currentOrder;
+	}
+
+	@Override
+	public SaleOrder addFreightToSaleOrder(String method, LocalDate deliveryDate, String address) {
+		currentOrder.addFreightToSaleOrder(method, deliveryDate, address);
+		return currentOrder;
+	}
+
+	@Override
+	public void addDiscountToSaleOrder() {
+		Discount discount = new Discount();
+		currentOrder.addDiscount(discount);
 	}
 
 }
