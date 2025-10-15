@@ -17,17 +17,17 @@ public class CustomerDB implements CustomerDAO {
 	public CustomerDB() throws SQLException {
 		initPreparedStatement();
 	}
-	
+
 	private void initPreparedStatement() throws SQLException {
 		Connection connection = DBConnection.getInstance().getConnection();
-		insertPS = connection.prepareStatement(INSERT_Q, Statement.RETURN_GENERATED_KEYS);
+		insertPS = connection.prepareStatement(INSERT_Q);
 		selectByIdPS = connection.prepareStatement(SELECT_BY_ID_Q);
 	}
-	
+
 	public Customer findCustomerById(int customerId) throws SQLException {
 		Customer customer = null;
 		ResultSet resultSet;
-		
+
 		selectByIdPS.setInt(1, customerId);
 		resultSet = selectByIdPS.executeQuery();
 		if (resultSet.next()) {
@@ -35,27 +35,35 @@ public class CustomerDB implements CustomerDAO {
 		}
 		return customer;
 	}
-	
-	public void addCustomer() throws SQLException {
+
+	private Customer buildObject(ResultSet rs) throws SQLException {
 		Customer customer = null;
-		ResultSet resultSet;
-		insertPS.setString(1, INSERT_Q);
-		resultSet = insertPS.executeQuery();
-		if (resultSet.next()) {
-			customer = buildObject(resultSet);
+
+		int customerId = rs.getInt(1);
+		String fName = rs.getString(2);
+		String lName = rs.getString(3);
+		String address = rs.getString(4);
+		int zipcode = rs.getInt(5);
+		String phoneNo = rs.getString(6);
+		return new Customer(customerId, fName, lName, address, zipcode, phoneNo);
+	}
+
+	@Override
+	public void addCustomer(Customer customer) {
+		try {
+			insertPS.setInt(1, customer.getCustomerId());
+			insertPS.setString(2, customer.getfName());
+			insertPS.setString(3, customer.getlName());
+			insertPS.setString(4, customer.getAddress());
+			insertPS.setInt(5, customer.getZipcode());
+			insertPS.setString(6, customer.getPhone());
+
+			insertPS.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
-	
-	private Customer buildObject(ResultSet rs) throws SQLException {
-			Customer customer = null;
-			
-			int customerId = rs.getInt(1);
-			String fName = rs.getString(2);
-			String lName = rs.getString(3);
-			String address = rs.getString(4);
-			int zipcode = rs.getInt(5);
-			String phoneNo = rs.getString(6);
-			return new Customer(customerId, fName, lName, address, zipcode, phoneNo);
-			}
-		
-	}
+
+}

@@ -12,7 +12,7 @@ public class Customer {
 		
 	}
 	
-	private String getfName() {
+	public String getfName() {
 		return fName;
 	}
 	
@@ -44,7 +44,7 @@ public class Customer {
 		this.phone = phone;
 	}
 
-	private int getZipcode() {
+	public int getZipcode() {
 		return zipcode;
 	}
 
@@ -52,7 +52,7 @@ public class Customer {
 		this.zipcode = zipcode;
 	}
 	
-	private int getCustomerId() {
+	public int getCustomerId() {
 		return customerId;
 	}
 	
