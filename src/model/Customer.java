@@ -6,12 +6,13 @@ public class Customer {
 	private String address;
 	private String phone;
 	private int zipcode;
+	private int customerId;
 	
-	public Customer(String fName, String lName, String address, String phone, int zipcode) {
+	public Customer(int customerId, String fName, String lName, String address, int zipcode, String phone) {
 		
 	}
 	
-	private String getfName() {
+	public String getfName() {
 		return fName;
 	}
 	
@@ -43,11 +44,19 @@ public class Customer {
 		this.phone = phone;
 	}
 
-	private int getZipcode() {
+	public int getZipcode() {
 		return zipcode;
 	}
 
 	private void setZipcode(int zipcode) {
 		this.zipcode = zipcode;
+	}
+	
+	public int getCustomerId() {
+		return customerId;
+	}
+	
+	private void setCustomerId(int customerId) {
+		this.customerId = customerId;
 	}
 }

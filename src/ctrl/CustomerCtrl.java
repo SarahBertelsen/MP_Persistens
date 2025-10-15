@@ -12,5 +12,9 @@ public class CustomerCtrl implements CustomerCtrlIF {
 		// customerDao.findCustomerById(customerId);
 		return null;
 	}
+	
+	private CustomerDAO customerDAO () {
+		return customerDao;
+	}
 
 }
