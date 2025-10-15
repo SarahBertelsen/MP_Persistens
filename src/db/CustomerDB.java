@@ -6,13 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import dal.DBConnection;
-import dal.DBMessages;
-import dal.DataAccessException;
 import model.Customer;
-import model.Lecturer;
 
-public class CustomerDB {
+public class CustomerDB implements CustomerDAO {
 	private static final String SELECT_BY_ID_Q = "SELECT * FROM Customer WHERE CustomerId = ?";
 	private static final String INSERT_Q = "INSERT INTO Customer VALUES (?, ?, ?, ?,?,?)";
 	private PreparedStatement selectByIdPS;
@@ -28,7 +24,7 @@ public class CustomerDB {
 		selectByIdPS = connection.prepareStatement(SELECT_BY_ID_Q);
 	}
 	
-	public Customer findById(int customerId) throws SQLException {
+	public Customer findCustomerById(int customerId) throws SQLException {
 		Customer customer = null;
 		ResultSet resultSet;
 		
@@ -40,7 +36,7 @@ public class CustomerDB {
 		return customer;
 	}
 	
-	public Customer insertQ() throws SQLException {
+	public void addCustomer() throws SQLException {
 		Customer customer = null;
 		ResultSet resultSet;
 		insertPS.setString(1, INSERT_Q);
@@ -48,7 +44,6 @@ public class CustomerDB {
 		if (resultSet.next()) {
 			customer = buildObject(resultSet);
 		}
-		return customer;
 	}
 	
 	private Customer buildObject(ResultSet rs) throws SQLException {
@@ -62,4 +57,5 @@ public class CustomerDB {
 			String phoneNo = rs.getString(6);
 			return new Customer(customerId, fName, lName, address, zipcode, phoneNo);
 			}
-}
+		
+	}

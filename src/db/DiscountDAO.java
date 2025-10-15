@@ -6,5 +6,5 @@ import model.Discount;
 
 public interface DiscountDAO {
 
-	public void insertDiscount(Discount discount) throws SQLException;
+	public void addDiscount(Discount discount) throws SQLException;
 }
