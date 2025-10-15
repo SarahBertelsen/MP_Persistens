@@ -36,7 +36,7 @@ public class CustomerDB implements CustomerDAO {
 		return customer;
 	}
 	
-	public Customer addCustomer() throws SQLException {
+	public void addCustomer() throws SQLException {
 		Customer customer = null;
 		ResultSet resultSet;
 		insertPS.setString(1, INSERT_Q);
@@ -44,7 +44,6 @@ public class CustomerDB implements CustomerDAO {
 		if (resultSet.next()) {
 			customer = buildObject(resultSet);
 		}
-		return customer;
 	}
 	
 	private Customer buildObject(ResultSet rs) throws SQLException {
@@ -58,10 +57,5 @@ public class CustomerDB implements CustomerDAO {
 			String phoneNo = rs.getString(6);
 			return new Customer(customerId, fName, lName, address, zipcode, phoneNo);
 			}
-
-	@Override
-	public void saveCustomer(Customer customer) {
-		// TODO Auto-generated method stub
 		
 	}
-}
