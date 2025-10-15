@@ -21,7 +21,7 @@ public class SaleOrderDB implements SaleOrderDAO {
 	}
 
 	@Override
-	public void saveSaleOrder(SaleOrder saleOrder) {
+	public void addSaleOrder(SaleOrder saleOrder) {
 		// TODO Auto-generated method stub
 		
 	}

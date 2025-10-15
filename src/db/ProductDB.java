@@ -36,7 +36,7 @@ public class ProductDB {
 		return product;
 	}
 
-	public Product insert(Product product) throws SQLException {
+	public Product addProduct(Product product) throws SQLException {
 		int productId = 0;
 		insertPS.setString(1, product.getName());
 		insertPS.setString(2, product.getProductType());
