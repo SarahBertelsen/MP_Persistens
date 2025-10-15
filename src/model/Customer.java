@@ -6,8 +6,9 @@ public class Customer {
 	private String address;
 	private String phone;
 	private int zipcode;
+	private int customerId;
 	
-	public Customer(String fName, String lName, String address, String phone, int zipcode) {
+	public Customer(int customerId, String fName, String lName, String address, int zipcode, String phone) {
 		
 	}
 	
@@ -49,5 +50,13 @@ public class Customer {
 
 	private void setZipcode(int zipcode) {
 		this.zipcode = zipcode;
+	}
+	
+	private int getCustomerId() {
+		return customerId;
+	}
+	
+	private void setCustomerId(int customerId) {
+		this.customerId = customerId;
 	}
 }
