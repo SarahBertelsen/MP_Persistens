@@ -8,7 +8,7 @@ import model.Discount;
 
 public class DiscountDB implements DiscountDAO {
 
-	private static final String INSERT_Q = " ";
+	private static final String INSERT_Q = "INSERT INTO Discount";
 	private PreparedStatement insertPS;
 	
 	public DiscountDB() {

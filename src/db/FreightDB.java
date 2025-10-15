@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import model.Freight;
 
 public class FreightDB implements FreightDAO{
-	private static final String INSERT_Q = " ";
+	private static final String INSERT_Q = "INSERT INTRO Freight";
 	private PreparedStatement insertPS;
 	
 	public FreightDB() {

@@ -1,8 +1,10 @@
 package db;
 
+import java.sql.SQLException;
+
 import model.Product;
 
 public interface StockDAO {
 
-	public boolean isAvailable(Product product, int qty);
+	public int findAvailableQty(Product product, int warehouseId) throws SQLException;
 }
