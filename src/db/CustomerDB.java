@@ -57,7 +57,6 @@ public class CustomerDB implements CustomerDAO {
 			insertPS.setString(4, customer.getAddress());
 			insertPS.setInt(5, customer.getZipcode());
 			insertPS.setString(6, customer.getPhone());
-
 			insertPS.executeUpdate();
 
 		} catch (SQLException e) {

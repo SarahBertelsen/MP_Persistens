@@ -9,23 +9,21 @@ import java.sql.Statement;
 import java.time.LocalDate;
 
 import model.Product;
+import model.Customer;
 import model.Discount;
 import model.Freight;
 import model.SaleOrder;
 
 public class SaleOrderDB implements SaleOrderDAO {
-<<<<<<< HEAD
+
 	private static final String INSERT_Q = "INSERT INTO SaleOrder VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private PreparedStatement insertPS;
-=======
-	private static final String INSERT_SALEORDER_Q = "";
-	private PreparedStatement insertSaleOrderPS;
 	
 	private CustomerDAO cDao;
 	private ProductDAO pDao;
 	private DiscountDAO dDao;
 	private FreightDAO fDao;
->>>>>>> cf9002add372759455d83555c1fc451d91bf91de
+
 	
 	public SaleOrderDB() throws SQLException {
 		initPreparedStatement();
@@ -37,8 +35,8 @@ public class SaleOrderDB implements SaleOrderDAO {
 	}
 
 	@Override
-	public SaleOrder addSaleOrder(SaleOrder saleOrder) {
-		Invoice inVoice = saleOrder.getInVoice();
+	public void addSaleOrder(SaleOrder saleOrder) {
+		Invoice inVoice = saleOrder.getInvoice();
 		Freight freight = saleOrder.getFreight();
 		Discount discount = saleOrder.getDiscount();
 		Customer customer = saleOrder.getCustomer();
@@ -48,20 +46,8 @@ public class SaleOrderDB implements SaleOrderDAO {
 		insertPS.setInt(3, discount.getDiscountId());
 		insertPS.setInt(4, customer.getCustomerId());
 		insertPS.setDate(5, Date.valueOf(LocalDate.now()));
-		insertPS.setDouble(6, saleOrder.getAmount());
+		insertPS.setDouble(6, saleOrder.getDiscount());
 		
 		insertPS.executeUpdate();
 	}
-<<<<<<< HEAD
-	
-
-=======
-
-	@Override
-	public void addSaleOrder(SaleOrder saleOrder) {
-		// TODO Auto-generated method stub
-		
-	}
-	
->>>>>>> cf9002add372759455d83555c1fc451d91bf91de
 }
