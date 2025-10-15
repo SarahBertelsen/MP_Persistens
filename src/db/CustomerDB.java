@@ -10,7 +10,7 @@ import model.Customer;
 
 public class CustomerDB implements CustomerDAO {
 	private static final String SELECT_BY_ID_Q = "SELECT * FROM Customer WHERE CustomerId = ?";
-	private static final String INSERT_Q = "INSERT INTO Customer VALUES (?, ?, ?, ?,?,?)";
+	private static final String INSERT_Q = "INSERT INTO Customer VALUES (CustomerId, FName, LName, Address, Zipcode, PhoneNo) (?, ?, ?, ?,?,?)";
 	private PreparedStatement selectByIdPS;
 	private PreparedStatement insertPS;
 
