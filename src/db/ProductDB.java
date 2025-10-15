@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import model.Product;
 
-public class ProductDB {
-	private static final String PS_INSERT = "INSERT INTO Product VALUES (?, ?, ?)";
+public class ProductDB implements ProductDAO{
+	private static final String PS_INSERT = "INSERT INTO Product VALUES (?, ?)";
 	private static final String FIND_BY_ID_Q = "SELECT * FROM Product WHERE ProductId = ?";
 
 	private PreparedStatement insertPS;
@@ -59,5 +59,11 @@ public class ProductDB {
 		String productType = rs.getString(3);
 
 		return new Product(productId, name, productType);
+	}
+
+	@Override
+	public Product findProductById(Product product) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
