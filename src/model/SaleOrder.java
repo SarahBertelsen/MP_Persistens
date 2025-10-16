@@ -10,26 +10,16 @@ public class SaleOrder {
 	private Freight freight;
 	private Discount discount;
 	private Customer customer;
-	private double amount;
 	private LocalDate date;
 
 	public SaleOrder(List<OrderLineItem> orderLines, int saleOrderId, Freight freight, Discount discount,
-			Customer customer, LocalDate date, double amount) {
+			Customer customer, LocalDate date) {
 		this.orderLines = orderLines;
 		this.saleOrderId = saleOrderId;
 		this.freight = freight;
 		this.discount = discount;
 		this.customer = customer;
 		this.date = date;
-		this.amount = amount;
-	}
-
-	public double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(double amount) {
-		this.amount = amount;
 	}
 
 	public int getSaleOrderId() {
@@ -74,5 +64,13 @@ public class SaleOrder {
 
 	public void addOrderLines(OrderLineItem ol) {
 		orderLines.add(ol);
+	}
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
 	}
 }

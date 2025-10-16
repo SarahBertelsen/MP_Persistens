@@ -7,7 +7,6 @@ public class Stock {
 	int reservedQty;
 	int minStock;
 	public Stock(Product product, Warehouse warehouse, int availableQty, int reservedQty, int minStock) {
-		super();
 		this.product = product;
 		this.warehouse = warehouse;
 		this.availableQty = availableQty;

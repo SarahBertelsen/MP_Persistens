@@ -5,6 +5,6 @@ import java.sql.SQLException;
 import model.Discount;
 
 public interface DiscountDAO {
-	public void addDiscount(Discount discount) throws SQLException;
+	public Discount addDiscount(Discount discount) throws SQLException;
 	public Discount findDiscountById(int discountId) throws SQLException;
 }

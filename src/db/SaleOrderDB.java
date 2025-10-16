@@ -17,15 +17,10 @@ import model.OrderLineItem;
 import model.SaleOrder;
 
 public class SaleOrderDB implements SaleOrderDAO {
-	private static final String INSERT_Q = "INSERT INTO SaleOrder VALUES (?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_Q = "INSERT INTO SaleOrder VALUES (?, ?, ?, ?, ?)";
 	private static final String FIND_BY_ID_Q = "SELECT * FROM SaleOrder WHERE saleOrderId = ?";
 
 	private PreparedStatement insertPS;
-	private CustomerDAO cDao;
-	private ProductDAO pDao;
-	private DiscountDAO dDao;
-	private FreightDAO fDao;
-
 	private PreparedStatement selectByIdPS;
 
 	public SaleOrderDB() throws SQLException {
@@ -34,49 +29,65 @@ public class SaleOrderDB implements SaleOrderDAO {
 
 	private void initPreparedStatement() throws SQLException {
 		Connection connection = DBConnection.getInstance().getConnection();
-		insertPS = connection.prepareStatement(INSERT_Q);
+		insertPS = connection.prepareStatement(INSERT_Q, Statement.RETURN_GENERATED_KEYS);
 		selectByIdPS = connection.prepareStatement(FIND_BY_ID_Q);
 
 	}
 
 	@Override
 	public SaleOrder addSaleOrder(SaleOrder saleOrder) {
-		Freight freight = saleOrder.getFreight();
-		Discount discount = saleOrder.getDiscount();
-		Customer customer = saleOrder.getCustomer();
-
-		insertPS.setInt(1, inVoice.getInVoiceId());
-		insertPS.setInt(2, freight.getFreightId());
-		insertPS.setInt(3, discount.getDiscountId());
-		insertPS.setInt(4, customer.getCustomerId());
+		int saleOrderId = 0;
+		
+		int freightId = saleOrder.getFreight().getFreightId();
+		int discountId = saleOrder.getDiscount().getDiscountId();
+		int customerId = saleOrder.getCustomer().getCustomerId();
+		
+		insertPS.setInt(2, freightId);
+		insertPS.setInt(3, discountId);
+		insertPS.setInt(4, customerId);
 		insertPS.setDate(5, Date.valueOf(LocalDate.now()));
-		insertPS.setDouble(6, saleOrder.getAmount());
 
 		insertPS.executeUpdate();
+		
+		ResultSet keyRS = insertPS.getGeneratedKeys();
+		if (keyRS.next()) {
+			saleOrderId = keyRS.getInt(1);
+			saleOrder.setSaleOrderId(saleOrderId);
+		}
+		
+		return saleOrder;
+		
 	}
 
-	public Product findSaleOrderById(int saleOrderId) throws SQLException {
-		Product product = null;
+	public SaleOrder findSaleOrderById(int saleOrderId) throws SQLException {
+		SaleOrder saleOrder = null;
 		ResultSet resultSet;
 
 		selectByIdPS.setInt(1, saleOrderId);
+		
 		resultSet = selectByIdPS.executeQuery();
 		if (resultSet.next()) {
-			product = buildObject(resultSet);
+			saleOrder = buildObject(resultSet);
 		}
-		return product;
+		return saleOrder;
 	}
 
 	private SaleOrder buildObject(ResultSet rs) throws SQLException {
-		List<OrderLineItem> orderLines;
-		OrderLineDB orderlineDB = new orderLineDB();
+		SaleOrder saleOrder = null;
 
-		int saleOrderId;
-		Freight freight;
-		Discount discount;
-		Customer customer;
-		LocalDate date;
-		Double amount;
-		return new SaleOrder(orderLines, saleOrderId, freight, discount, customer, date, amount);
+		int saleOrderId = rs.getInt(1);
+		int freightId = rs.getInt(2);
+		int discountId = rs.getInt(3);
+		int customerId = rs.getInt(4);
+		LocalDate date = rs.getDate(5).toLocalDate();
+		
+		List<OrderLineItem> orderLines = new OrderLineItemDB().getOrderLinesBySaleOrderId(saleOrderId);
+		Freight freight = new FreightDB().findFreightById(freightId);
+		Discount discount = new DiscountDB().findDiscountById(discountId);
+		Customer customer = new CustomerDB().findCustomerById(customerId);
+		
+		saleOrder = new SaleOrder(orderLines, saleOrderId, freight, discount, customer, date);
+		
+		return saleOrder;
 	}
 }

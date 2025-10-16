@@ -5,14 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.Product;
+import model.Stock;
 
 public class StockDB implements StockDAO{
 
 	private static final String SELECT_BY_ID_Q = "SELECT * FROM Stock WHERE productId = ? AND qarehouseId = ?";
-	private static final String UPDATE_STOCK_Q = "UPDATE Stock SET availableQty WHERE productId = ? AND warehouseId = ?";
+	private static final String UPDATE_STOCK_Q = "UPDATE Stock SET availableQty = ? WHERE productId = ? AND warehouseId = ?";
+	private static final String INSERT_Q = "INSERT INTO Stock VALUES (?, ?, ?, ?, ?)";
 	
 	private PreparedStatement selectByIdPS;
 	private PreparedStatement updatePS;
+	private PreparedStatement insertPS;
 	
 	public StockDB() throws SQLException {
 		initPreparedStatement();
@@ -22,6 +25,7 @@ public class StockDB implements StockDAO{
 		Connection connection = DBConnection.getInstance().getConnection();
 		updatePS = connection.prepareStatement(UPDATE_STOCK_Q);
 		selectByIdPS = connection.prepareStatement(SELECT_BY_ID_Q);
+		insertPS = connection.prepareStatement(INSERT_Q);
 	}
 	
 	@Override
@@ -38,10 +42,28 @@ public class StockDB implements StockDAO{
 		return availableQty;
 	}
 
-	private void setAvailableQty(Product product, int qty, int warehouseId) throws SQLException {
+	public void setAvailableQty(Product product, int qty, int warehouseId) throws SQLException {
 		updatePS.setInt(1, qty); //sæt ny mængde
 		updatePS.setInt(2,  product.getProductId()); //sæt productId
 		updatePS.setInt(3, warehouseId); //sæt warehouseId
 		updatePS.executeUpdate(); //udfør opdatering
+	}
+
+	@Override
+	public Stock addStock(Stock stock) throws SQLException {
+		int productId = stock.getProduct().getProductId();
+		int warehouseId = stock.getWarehouse().getWarehouseId();
+		int availableQty = stock.getAvailableQty();
+		int reservedQty = stock.getReservedQty();
+		int minStock = stock.getMinStock();
+		
+		insertPS.setInt(1, productId);
+		insertPS.setInt(2, warehouseId);
+		insertPS.setInt(3, availableQty);
+		insertPS.setInt(4, reservedQty);
+		insertPS.setInt(5, minStock);
+		insertPS.executeUpdate();
+		
+		return stock;
 	}
 }

@@ -3,10 +3,11 @@ package model;
 import java.time.LocalDate;
 
 public class Freight {
+	private int freightId;
 	private String method;
 	private LocalDate deliveryDate;
 	private String address;
-	private int freightId;
+	
 
 	public Freight(int freightId, String method, LocalDate deliveryDate, String address) {
 		this.freightId = freightId;

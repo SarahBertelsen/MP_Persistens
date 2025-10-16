@@ -21,7 +21,7 @@ public class CustomerDB implements CustomerDAO {
 	private void initPreparedStatement() throws SQLException {
 		Connection connection = DBConnection.getInstance().getConnection();
 		insertPS = connection.prepareStatement(INSERT_Q);
-		selectByIdPS = connection.prepareStatement(SELECT_BY_ID_Q);
+		selectByIdPS = connection.prepareStatement(SELECT_BY_ID_Q, Statement.RETURN_GENERATED_KEYS);
 	}
 
 	public Customer findCustomerById(int customerId) throws SQLException {
@@ -50,22 +50,22 @@ public class CustomerDB implements CustomerDAO {
 		return customer;
 	}
 
-	@Override
-	public void addCustomer(Customer customer) {
-		try {
-			insertPS.setInt(1, customer.getCustomerId());
-			insertPS.setString(2, customer.getfName());
-			insertPS.setString(3, customer.getlName());
-			insertPS.setString(4, customer.getAddress());
-			insertPS.setInt(5, customer.getZipcode());
-			insertPS.setString(6, customer.getPhone());
+	public Customer addCustomer(Customer customer) throws SQLException {
+		int customerId = 0;
+		insertPS.setString(2, customer.getfName());
+		insertPS.setString(3, customer.getlName());
+		insertPS.setString(4, customer.getAddress());
+		insertPS.setInt(5, customer.getZipcode());
+		insertPS.setString(6, customer.getPhone());
 
-			insertPS.executeUpdate();
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		insertPS.executeUpdate();
+		ResultSet keyRS = insertPS.getGeneratedKeys();
+		if (keyRS.next()) {
+			customerId = keyRS.getInt(1);
+			customer.setCustomerId(customerId);
 		}
+		
+		return customer;
 	}
 
 }

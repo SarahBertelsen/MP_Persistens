@@ -21,11 +21,11 @@ public class Customer {
 		return fName;
 	}
 	
-	private void setFName(String fName) {
+	public void setFName(String fName) {
 		this.fName = fName;
 	}
 	
-	private void setLName(String lName) {
+	public void setLName(String lName) {
 		this.lName = lName;
 	}
 
@@ -53,7 +53,7 @@ public class Customer {
 		return zipcode;
 	}
 
-	private void setZipcode(int zipcode) {
+	public void setZipcode(int zipcode) {
 		this.zipcode = zipcode;
 	}
 	
@@ -61,7 +61,7 @@ public class Customer {
 		return customerId;
 	}
 	
-	private void setCustomerId(int customerId) {
+	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}
 }

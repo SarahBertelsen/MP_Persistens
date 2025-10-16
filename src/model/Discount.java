@@ -1,12 +1,13 @@
 package model;
 
 public class Discount {
-
+	private int discountId;
 	private String type;
-	private int amount;
-	private int treshold;
+	private double amount;
+	private double treshold;
 	
-	public Discount(String type, int amount, int treshold) {
+	public Discount(int discountId, String type, double amount, double treshold) {
+		this.setDiscountId(discountId);
 		this.type = type;
 		this.amount = amount;
 		this.treshold = treshold;
@@ -20,7 +21,7 @@ public class Discount {
 		this.type = type;
 	}
 
-	public int getAmount() {
+	public double getAmount() {
 		return amount;
 	}
 
@@ -28,12 +29,20 @@ public class Discount {
 		this.amount = amount;
 	}
 
-	public int getTreshold() {
+	public double getTreshold() {
 		return treshold;
 	}
 
 	public void setTreshold(int treshold) {
 		this.treshold = treshold;
+	}
+
+	public int getDiscountId() {
+		return discountId;
+	}
+
+	public void setDiscountId(int discountId) {
+		this.discountId = discountId;
 	}
 	
 	
