@@ -14,19 +14,13 @@ import model.Freight;
 import model.SaleOrder;
 
 public class SaleOrderDB implements SaleOrderDAO {
-<<<<<<< HEAD
 	private static final String INSERT_Q = "INSERT INTO SaleOrder VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private PreparedStatement insertPS;
-=======
-	private static final String INSERT_SALEORDER_Q = "";
-	private PreparedStatement insertSaleOrderPS;
-	
 	private CustomerDAO cDao;
 	private ProductDAO pDao;
 	private DiscountDAO dDao;
 	private FreightDAO fDao;
->>>>>>> cf9002add372759455d83555c1fc451d91bf91de
-	
+
 	public SaleOrderDB() throws SQLException {
 		initPreparedStatement();
 	}
@@ -52,16 +46,4 @@ public class SaleOrderDB implements SaleOrderDAO {
 		
 		insertPS.executeUpdate();
 	}
-<<<<<<< HEAD
-	
-
-=======
-
-	@Override
-	public void addSaleOrder(SaleOrder saleOrder) {
-		// TODO Auto-generated method stub
-		
-	}
-	
->>>>>>> cf9002add372759455d83555c1fc451d91bf91de
 }
