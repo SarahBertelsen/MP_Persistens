@@ -8,7 +8,7 @@ import java.sql.Statement;
 import model.Product;
 
 public class ProductDB implements ProductDAO{
-	private static final String INSERT_Q = "INSERT INTO Product VALUES (?, ?)";
+	private static final String INSERT_Q = "INSERT INTO Product (name,productType) VALUES (?, ?)";
 	
 	private static final String FIND_BY_ID_Q = "SELECT * FROM Product WHERE ProductId = ?";
 
