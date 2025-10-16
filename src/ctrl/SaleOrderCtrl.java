@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import db.CustomerDAO;
 import db.DBConnection;
+import db.DiscountDAO;
+import db.FreightDAO;
 import db.SaleOrderDAO;
 import model.Customer;
 import model.Product;
