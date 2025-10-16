@@ -18,8 +18,13 @@ public class TestUtilitiesGenerateData {
 	private PreparedStatement deleteStockPS;
 	private PreparedStatement deleteWarehousePS;
 	
+	private ArrayList<Product> products; 
+	private ArrayList<Customer> customers;
+	
 	public TestUtilitiesGenerateData() throws SQLException {
 		initPreparedStatement();
+		products = new ArrayList<>();
+		customers = new ArrayList<>();
 	}
 	
 	public void initPreparedStatement() throws SQLException {
@@ -43,6 +48,11 @@ public class TestUtilitiesGenerateData {
 		Product product1 = new Product(1, "strawberry", "Fruit");
 		Product product2 = new Product(2, "orange", "Fruit");
 		product = pdb.addProduct(product);
+		product1 = pdb.addProduct(product1);
+		product2 = pdb.addProduct(product2);
+		products.add(product);
+		products.add(product1);
+		products.add(product2);
 	}
 	
 	public void deleteProducts() throws SQLException {
