@@ -9,6 +9,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import ctrl.SaleOrderCtrl;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AddCustomer extends JDialog {
 
@@ -16,6 +20,7 @@ public class AddCustomer extends JDialog {
 	
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
+	private JTextField txtCustomerId;
 
 	/**
 	 * Launch the application.
@@ -41,14 +46,28 @@ public class AddCustomer extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		{
+			JLabel cusIdLbl = new JLabel("Insert customer id:");
+			contentPanel.add(cusIdLbl);
+		}
+		{
+			txtCustomerId = new JTextField();
+			contentPanel.add(txtCustomerId);
+			txtCustomerId.setColumns(10);
+		}
+		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				JButton addCustomerBtn = new JButton("Add customer");
+				addCustomerBtn.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						addCustomerClicked();
+					}
+				});
+				addCustomerBtn.setActionCommand("OK");
+				buttonPane.add(addCustomerBtn);
+				getRootPane().setDefaultButton(addCustomerBtn);
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
@@ -58,9 +77,15 @@ public class AddCustomer extends JDialog {
 		}
 	}
 	
-	private void addCustomerClicked() {
+	public int getAddedCustomerId() {
+		String txtCustomerIdString = txtCustomerId.getText(); //get String from textfield
+		int txtCustomerIdInt = Integer.parseInt(txtCustomerIdString); //parse to int
+		return txtCustomerIdInt;
+	}
+	
+	public void addCustomerClicked() {
 		SaleOrderView sov = new SaleOrderView(soCtrl);
-		
+		sov.addCustomerClicked();
 		sov.setVisible(true);
 	}
 

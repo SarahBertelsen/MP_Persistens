@@ -51,11 +51,11 @@ public class SaleOrderCtrl implements SaleOrderCtrlIF{
 	}
 
 	@Override
-	public boolean confirmOrder(SaleOrder saleOrder) {
+	public boolean confirmOrder() {
 		dbConnection.startTransaction();
-		saleOrderDAO.insertOrder(currentOrder);
+		saleOrderDAO.addSaleOrder(currentOrder);
 		orderLineItemDAO.insertOrderLineItem(orderLineItem);
-		boolean success = productCtrl.removeFromStock(saleOrder);
+		boolean success = productCtrl.removeFromStock(currentOrder);
 		
 		if (success) {
 			dbConnection.commitTransaction();

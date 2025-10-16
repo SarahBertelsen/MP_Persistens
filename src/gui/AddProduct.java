@@ -14,15 +14,18 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AddProduct extends JDialog {
 
 	private SaleOrderCtrl soCtrl;
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	
+	private JTextField txtQty;
+	private JTextField txtWarehouseId;
+	private JTextField txtProdId;
 
 	/**
 	 * Launch the application.
@@ -62,14 +65,14 @@ public class AddProduct extends JDialog {
 			contentPanel.add(prodIdLbl, gbc_prodIdLbl);
 		}
 		{
-			textField = new JTextField();
-			GridBagConstraints gbc_textField = new GridBagConstraints();
-			gbc_textField.insets = new Insets(0, 0, 5, 0);
-			gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textField.gridx = 1;
-			gbc_textField.gridy = 0;
-			contentPanel.add(textField, gbc_textField);
-			textField.setColumns(10);
+			txtProdId = new JTextField();
+			GridBagConstraints gbc_txtProdId = new GridBagConstraints();
+			gbc_txtProdId.insets = new Insets(0, 0, 5, 0);
+			gbc_txtProdId.fill = GridBagConstraints.HORIZONTAL;
+			gbc_txtProdId.gridx = 1;
+			gbc_txtProdId.gridy = 0;
+			contentPanel.add(txtProdId, gbc_txtProdId);
+			txtProdId.setColumns(10);
 		}
 		{
 			JLabel qtyLbl = new JLabel("Insert qty:");
@@ -81,14 +84,14 @@ public class AddProduct extends JDialog {
 			contentPanel.add(qtyLbl, gbc_qtyLbl);
 		}
 		{
-			textField_1 = new JTextField();
-			GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-			gbc_textField_1.insets = new Insets(0, 0, 5, 0);
-			gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textField_1.gridx = 1;
-			gbc_textField_1.gridy = 1;
-			contentPanel.add(textField_1, gbc_textField_1);
-			textField_1.setColumns(10);
+			txtQty = new JTextField();
+			GridBagConstraints gbc_txtQty = new GridBagConstraints();
+			gbc_txtQty.insets = new Insets(0, 0, 5, 0);
+			gbc_txtQty.fill = GridBagConstraints.HORIZONTAL;
+			gbc_txtQty.gridx = 1;
+			gbc_txtQty.gridy = 1;
+			contentPanel.add(txtQty, gbc_txtQty);
+			txtQty.setColumns(10);
 		}
 		{
 			JLabel warehouseLbl = new JLabel("Insert warehouse id:");
@@ -100,23 +103,28 @@ public class AddProduct extends JDialog {
 			contentPanel.add(warehouseLbl, gbc_warehouseLbl);
 		}
 		{
-			textField_2 = new JTextField();
-			GridBagConstraints gbc_textField_2 = new GridBagConstraints();
-			gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textField_2.gridx = 1;
-			gbc_textField_2.gridy = 2;
-			contentPanel.add(textField_2, gbc_textField_2);
-			textField_2.setColumns(10);
+			txtWarehouseId = new JTextField();
+			GridBagConstraints gbc_txtWarehouseId = new GridBagConstraints();
+			gbc_txtWarehouseId.fill = GridBagConstraints.HORIZONTAL;
+			gbc_txtWarehouseId.gridx = 1;
+			gbc_txtWarehouseId.gridy = 2;
+			contentPanel.add(txtWarehouseId, gbc_txtWarehouseId);
+			txtWarehouseId.setColumns(10);
 		}
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("Add product");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				JButton addProductBtn = new JButton("Add product");
+				addProductBtn.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						addProductClicked();
+					}
+				});
+				addProductBtn.setActionCommand("OK");
+				buttonPane.add(addProductBtn);
+				getRootPane().setDefaultButton(addProductBtn);
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
@@ -126,4 +134,28 @@ public class AddProduct extends JDialog {
 		}
 	}
 
+	public int getAddedProductId() {
+		String txtProdIdString = txtProdId.getText(); //get String from textfield
+		int txtProdIdInt = Integer.parseInt(txtProdIdString); //parse to int
+		return txtProdIdInt;
+		
+	}
+	
+	public int getAddedQty() {
+		String txtQtyString = txtQty.getText(); //get String from textfield
+		int txtQtyInt = Integer.parseInt(txtQtyString); //parse to int
+		return txtQtyInt;
+	}
+	
+	public int getAddedWarehouseId() {
+		String txtWarehouseIdString = txtWarehouseId.getText(); //get String from textfield
+		int txtWarehouseIdInt = Integer.parseInt(txtWarehouseIdString); //parse to int
+		return txtWarehouseIdInt;
+	}
+	
+	public void addProductClicked(){
+		SaleOrderView sov = new SaleOrderView(soCtrl); //create new SaleOrderView
+		sov.addProductClicked(); //calls addProduct method in SaleOrderView
+		sov.setVisible(true); //opens SaleOrderView
+	}
 }

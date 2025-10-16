@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import ctrl.SaleOrderCtrl;
+import model.Customer;
+import model.Freight;
 import model.OrderLineItem;
 import model.SaleOrder;
 import java.awt.BorderLayout;
@@ -16,6 +18,7 @@ import javax.swing.JButton;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JTextField;
@@ -23,6 +26,9 @@ import java.awt.Font;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.awt.event.ActionEvent;
 
 public class SaleOrderView extends JFrame {
 
@@ -33,8 +39,12 @@ public class SaleOrderView extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtFName;
 	private JTextField txtLName;
-	private JTextField txtCusId;
+	private JTextField txtCustomerId;
 	private JTable olTable;
+	private JTextField txtMethod;
+	private JTextField txtDeliveryDate;
+	private JTextField txtAddress;
+	private JTextField txtTotalCost;
 
 	/**
 	 * Launch the application.
@@ -73,12 +83,17 @@ public class SaleOrderView extends JFrame {
 		contentPane.add(panel, BorderLayout.WEST);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{0, 0};
-		gbl_panel.rowHeights = new int[]{0, 0, 0, 0};
-		gbl_panel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
 		JButton addCusBtn = new JButton("Add Customer");
+		addCusBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addCustomerClicked();
+			}
+		});
 		GridBagConstraints gbc_addCusBtn = new GridBagConstraints();
 		gbc_addCusBtn.fill = GridBagConstraints.HORIZONTAL;
 		gbc_addCusBtn.insets = new Insets(0, 0, 5, 0);
@@ -87,6 +102,11 @@ public class SaleOrderView extends JFrame {
 		panel.add(addCusBtn, gbc_addCusBtn);
 		
 		JButton addProdBtn = new JButton("Add Product");
+		addProdBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addProductClicked();
+			}
+		});
 		GridBagConstraints gbc_addProdBtn = new GridBagConstraints();
 		gbc_addProdBtn.fill = GridBagConstraints.HORIZONTAL;
 		gbc_addProdBtn.insets = new Insets(0, 0, 5, 0);
@@ -95,19 +115,40 @@ public class SaleOrderView extends JFrame {
 		panel.add(addProdBtn, gbc_addProdBtn);
 		
 		JButton addFreightBtn = new JButton("Add Freight");
+		addFreightBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addFreightClicked();
+			}
+		});
 		GridBagConstraints gbc_addFreightBtn = new GridBagConstraints();
+		gbc_addFreightBtn.insets = new Insets(0, 0, 5, 0);
 		gbc_addFreightBtn.fill = GridBagConstraints.HORIZONTAL;
 		gbc_addFreightBtn.gridx = 0;
 		gbc_addFreightBtn.gridy = 2;
 		panel.add(addFreightBtn, gbc_addFreightBtn);
 		
+		JLabel lblNewLabel_1 = new JLabel("Total cost:");
+		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
+		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNewLabel_1.gridx = 0;
+		gbc_lblNewLabel_1.gridy = 12;
+		panel.add(lblNewLabel_1, gbc_lblNewLabel_1);
+		
+		txtTotalCost = new JTextField();
+		GridBagConstraints gbc_txtTotalCost = new GridBagConstraints();
+		gbc_txtTotalCost.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtTotalCost.gridx = 0;
+		gbc_txtTotalCost.gridy = 13;
+		panel.add(txtTotalCost, gbc_txtTotalCost);
+		txtTotalCost.setColumns(10);
+		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.EAST);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[]{0, 0};
-		gbl_panel_1.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panel_1.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_panel_1.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel_1.setLayout(gbl_panel_1);
 		
 		JLabel cusLbl = new JLabel("Customer");
@@ -160,13 +201,70 @@ public class SaleOrderView extends JFrame {
 		gbc_cusIdLbl.gridy = 5;
 		panel_1.add(cusIdLbl, gbc_cusIdLbl);
 		
-		txtCusId = new JTextField();
-		GridBagConstraints gbc_txtCusId = new GridBagConstraints();
-		gbc_txtCusId.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtCusId.gridx = 0;
-		gbc_txtCusId.gridy = 6;
-		panel_1.add(txtCusId, gbc_txtCusId);
-		txtCusId.setColumns(10);
+		txtCustomerId = new JTextField();
+		GridBagConstraints gbc_txtCustomerId = new GridBagConstraints();
+		gbc_txtCustomerId.insets = new Insets(0, 0, 5, 0);
+		gbc_txtCustomerId.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtCustomerId.gridx = 0;
+		gbc_txtCustomerId.gridy = 6;
+		panel_1.add(txtCustomerId, gbc_txtCustomerId);
+		txtCustomerId.setColumns(10);
+		
+		JLabel freightTitleLbl = new JLabel("Freight");
+		GridBagConstraints gbc_freightTitleLbl = new GridBagConstraints();
+		gbc_freightTitleLbl.insets = new Insets(0, 0, 5, 0);
+		gbc_freightTitleLbl.gridx = 0;
+		gbc_freightTitleLbl.gridy = 8;
+		panel_1.add(freightTitleLbl, gbc_freightTitleLbl);
+		freightTitleLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		freightTitleLbl.setFont(new Font("Tahoma", Font.BOLD, 10));
+		
+		JLabel methodLbl = new JLabel("Method:");
+		GridBagConstraints gbc_methodLbl = new GridBagConstraints();
+		gbc_methodLbl.insets = new Insets(0, 0, 5, 0);
+		gbc_methodLbl.gridx = 0;
+		gbc_methodLbl.gridy = 9;
+		panel_1.add(methodLbl, gbc_methodLbl);
+		
+		txtMethod = new JTextField();
+		GridBagConstraints gbc_txtMethod = new GridBagConstraints();
+		gbc_txtMethod.insets = new Insets(0, 0, 5, 0);
+		gbc_txtMethod.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtMethod.gridx = 0;
+		gbc_txtMethod.gridy = 10;
+		panel_1.add(txtMethod, gbc_txtMethod);
+		txtMethod.setColumns(10);
+		
+		JLabel DeliveryDateLbl = new JLabel("Delivery date:");
+		GridBagConstraints gbc_DeliveryDateLbl = new GridBagConstraints();
+		gbc_DeliveryDateLbl.insets = new Insets(0, 0, 5, 0);
+		gbc_DeliveryDateLbl.gridx = 0;
+		gbc_DeliveryDateLbl.gridy = 11;
+		panel_1.add(DeliveryDateLbl, gbc_DeliveryDateLbl);
+		
+		txtDeliveryDate = new JTextField();
+		GridBagConstraints gbc_txtDeliveryDate = new GridBagConstraints();
+		gbc_txtDeliveryDate.insets = new Insets(0, 0, 5, 0);
+		gbc_txtDeliveryDate.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtDeliveryDate.gridx = 0;
+		gbc_txtDeliveryDate.gridy = 12;
+		panel_1.add(txtDeliveryDate, gbc_txtDeliveryDate);
+		txtDeliveryDate.setColumns(10);
+		
+		JLabel lblNewLabel_4 = new JLabel("Address:");
+		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
+		gbc_lblNewLabel_4.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNewLabel_4.gridx = 0;
+		gbc_lblNewLabel_4.gridy = 13;
+		panel_1.add(lblNewLabel_4, gbc_lblNewLabel_4);
+		
+		txtAddress = new JTextField();
+		GridBagConstraints gbc_txtAddress = new GridBagConstraints();
+		gbc_txtAddress.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtAddress.gridx = 0;
+		gbc_txtAddress.gridy = 14;
+		panel_1.add(txtAddress, gbc_txtAddress);
+		txtAddress.setColumns(10);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
@@ -177,33 +275,70 @@ public class SaleOrderView extends JFrame {
 
 	}
 
-	private void addCustomerClicked() {
+	public void addCustomerClicked() {
 		AddCustomer ac = new AddCustomer(soCtrl);
+		ac.setVisible(true);
+		int customerId = ac.getAddedCustomerId();
+		
+		SaleOrder so = soCtrl.addCustomerToSaleOrder(customerId);
+		
+		int newCustomerId = so.getCustomer().getCustomerId();
+		String firstName = so.getCustomer().getfName();
+		String lastName = so.getCustomer().getlName();
+		
+		txtCustomerId.setText(String.valueOf(newCustomerId));
+		txtFName.setText(firstName);
+		txtLName.setText(lastName);
 		
 	}
 	
-	private void addProductClicked() {
+	public void addProductClicked() {
 		AddProduct ap = new AddProduct(soCtrl);
 		ap.setVisible(true);
-		int productId = txtProdId.getText();
-		int qty = txtQty.getText();
-		int warehouseId = txtWarehouseId.getText();
+		int productId = ap.getAddedProductId();
+		int qty = ap.getAddedQty();
+		int warehouseId = ap.getAddedWarehouseId();
 		
 		SaleOrder so = soCtrl.addProductToSaleOrder(productId, qty, warehouseId);
 		displayOrderLine(so);
+		updateDisplayPrice(so);
 	}
 	
-	private void displayOrderLine(SaleOrder so) {
+	public void updateDisplayPrice(SaleOrder so) {
+		SalesPriceDB spdb = new SalePriceDB();
+		double salesPrice = spdb.findSalesPriceByProductId();
+		ArrayList<OrderLineItem> orderLines = so.getOrderLines();
+		double totalCost = 0;
+		for(OrderLineItem ol : orderLines) {
+			int productId = ol.getProduct().getProductId();
+			double price = spdb.findSalesPriceByProductId(productId).getPrice();
+			int qty = ol.getQty();
+			totalCost += price * qty;
+		}
+		txtTotalCost.setText(Double.toString(totalCost));
+	}
+	
+	public void displayOrderLine(SaleOrder so) {
 		List<OrderLineItem> orderLines = so.getOrderLines();
 		OrderLineItemTableModel olm = new OrderLineItemTableModel(orderLines);
 		olTable.setModel(olm);
 	}
 	
-	private void confirmClicked() {
-		SaleOrder so = new SaleOrder();
-		so.setCustomer(txtCusId.getText());
-		so.setFreight(txtFreight.getText());
-		so.setDiscount(null); //ved ikke lige hvordan...
-		soCtrl.confirmOrder(so);
+	public void addFreightClicked() {
+		AddFreight af = new AddFreight(soCtrl);
+		af.setVisible(true);
+		String method = af.getAddedMethod();
+		LocalDate deliveryDate = af.getAddedDeliveryDate();
+		String address = af.getAddedAddress();
+		
+		SaleOrder so = soCtrl.addFreightToSaleOrder(method, deliveryDate, address);
+		
+		txtMethod.setText(method);
+		txtDeliveryDate.setText(deliveryDate.toString());
+		txtAddress.setText(address);
+	}
+	
+	public void confirmClicked() {
+		soCtrl.confirmOrder();
 	}
 }
