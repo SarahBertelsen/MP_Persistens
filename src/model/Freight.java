@@ -6,11 +6,21 @@ public class Freight {
 	private String method;
 	private LocalDate deliveryDate;
 	private String address;
-	
-	public Freight(String method, LocalDate deliveryDate, String address) {
+	private int freightId;
+
+	public Freight(int freightId, String method, LocalDate deliveryDate, String address) {
+		this.freightId = freightId;
 		this.method = method;
 		this.deliveryDate = deliveryDate;
 		this.address = address;
+	}
+
+	public int getFreightId() {
+		return freightId;
+	}
+
+	public void setFreightId(int freightId) {
+		this.freightId = freightId;
 	}
 
 	public String getMethod() {
@@ -28,7 +38,7 @@ public class Freight {
 	public void setDeliveryDate(LocalDate deliveryDate) {
 		this.deliveryDate = deliveryDate;
 	}
-	
+
 	public String getAddress() {
 		return address;
 	}
@@ -36,5 +46,5 @@ public class Freight {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
+
 }

@@ -9,7 +9,12 @@ public class Customer {
 	private int customerId;
 	
 	public Customer(int customerId, String fName, String lName, String address, int zipcode, String phone) {
-		
+		this.customerId = customerId;
+		this.fName = fName;
+		this.lName = lName;
+		this.address = address;
+		this.zipcode = zipcode;
+		this.phone = phone;
 	}
 	
 	public String getfName() {
