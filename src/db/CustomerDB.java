@@ -45,7 +45,9 @@ public class CustomerDB implements CustomerDAO {
 		String address = rs.getString(4);
 		int zipcode = rs.getInt(5);
 		String phoneNo = rs.getString(6);
-		return new Customer(customerId, fName, lName, address, zipcode, phoneNo);
+		
+		customer = new Customer(customerId, fName, lName, address, zipcode, phoneNo);
+		return customer;
 	}
 
 	@Override

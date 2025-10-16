@@ -8,12 +8,16 @@ import java.sql.Statement;
 import model.Product;
 
 public class ProductDB implements ProductDAO{
+<<<<<<< HEAD
 	private static final String INSERT_Q = "INSERT INTO Product (name,productType) VALUES (?, ?)";
 	
+=======
+	private static final String INSERT_Q = "INSERT INTO Product VALUES (?, ?)";
+>>>>>>> b6aa9b116c785f2ae311801459cd43c27b1c333a
 	private static final String FIND_BY_ID_Q = "SELECT * FROM Product WHERE ProductId = ?";
-
-	private PreparedStatement insertPS;
+	
 	private PreparedStatement selectByIdPS;
+	private PreparedStatement insertPS;
 
 	public ProductDB() throws SQLException {
 		initPreparedStatement();
@@ -21,8 +25,8 @@ public class ProductDB implements ProductDAO{
 
 	private void initPreparedStatement() throws SQLException {
 		Connection connection = DBConnection.getInstance().getConnection();
-		insertPS = connection.prepareStatement(INSERT_Q, Statement.RETURN_GENERATED_KEYS);
 		selectByIdPS = connection.prepareStatement(FIND_BY_ID_Q);
+		insertPS = connection.prepareStatement(INSERT_Q, Statement.RETURN_GENERATED_KEYS);
 	}
 
 	public Product findProductById(int productId) throws SQLException {
@@ -58,12 +62,8 @@ public class ProductDB implements ProductDAO{
 		String name = rs.getString(2);
 		String productType = rs.getString(3);
 
-		return new Product(productId, name, productType);
-	}
-
-	@Override
-	public Product findProductById(Product product) {
-		// TODO Auto-generated method stub
-		return null;
+		product = new Product(productId, name, productType);
+		
+		return product;
 	}
 }
