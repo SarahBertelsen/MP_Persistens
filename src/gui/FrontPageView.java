@@ -8,6 +8,11 @@ import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 
 import ctrl.SaleOrderCtrl;
+import db.CustomerDB;
+import db.OrderLineItemDB;
+import db.ProductDB;
+import db.SaleOrderDB;
+import db.StockDB;
 
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
@@ -44,7 +49,7 @@ public class FrontPageView {
 	 * @throws SQLException 
 	 */
 	public FrontPageView() throws SQLException {
-		this.soCtrl = new SaleOrderCtrl();
+		this.soCtrl = new SaleOrderCtrl(new CustomerDB(), new ProductDB(), new StockDB(), new SaleOrderDB(), new OrderLineItemDB());
 		initialize();
 	}
 

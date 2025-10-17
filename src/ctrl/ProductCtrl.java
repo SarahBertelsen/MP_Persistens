@@ -49,35 +49,31 @@ public class ProductCtrl implements ProductCtrlIF {
 	}
 
 	@Override
-	public boolean removeFromStock(SaleOrder saleOrder) {
+	public boolean removeFromStock(SaleOrder saleOrder) throws SQLException {
 		StockDB stockDb = new StockDB();
 		boolean success = false;
-		try {
-			for(OrderLineItem ol : SaleOrder.getOrderLines()) {
-				Product product = ol.getProduct();
-				stockDb.get
-				int availableQty = 0;
+		for(OrderLineItem ol : saleOrder.getOrderLines()) {
+			Product product = ol.getProduct();
+			int warehouseId = product.getWarehouse().getWarehouseId();
+			int availableQty = 0;
+			int qty = ol.getQty();
+			try {
+				availableQty = stockDb.findAvailableQty(product, warehouseId);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			if (availableQty >= qty) {
+				int postRemoveStock = availableQty - qty;
+				success = true;
 				try {
-					availableQty = stockDb.findAvailableQty(product, warehouseId);
+					stockDao.setAvailableQty(product, postRemoveStock, warehouseId);
 				} catch (SQLException e) {
+					success = false;
 					e.printStackTrace();
 				}
-				
-				if (availableQty >= qty) {
-					int postRemoveStock = availableQty - qty;
-					success = true;
-					try {
-						stockDao.setAvailableQty(product, postRemoveStock, warehouseId);
-					} catch (SQLException e) {
-						success = false;
-						e.printStackTrace();
-					}
-				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
-		
 		
 		return success;
 	}

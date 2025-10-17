@@ -13,7 +13,7 @@ import db.DBConnection;
 import db.ProductDB;
 import model.Product;
 
-public class IntegrationTest2 {
+public class IntegrationTest {
 
     private TestUtilitiesGenerateData testUtil;
     private ProductDB productDB;
@@ -39,7 +39,7 @@ public class IntegrationTest2 {
     @Test
     public void testCreateProduct() throws SQLException {
         // Arrange
-        Product newProduct = new Product(3, "Michael Jackson", "MusicProduct", 100);
+        Product newProduct = new MusicProduct(3, "Michael Jackson", "MusicProduct", 100);
 
         // Act
         Product createdProduct = productDB.addProduct(newProduct);

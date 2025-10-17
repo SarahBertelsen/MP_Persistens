@@ -19,20 +19,23 @@ public class SaleOrderCtrl implements SaleOrderCtrlIF{
 	private CustomerCtrl customerCtrl;
 	private ProductCtrl productCtrl;
 	
-	private SaleOrderDAO saleOrderDAO;
-	private OrderLineItemDAO orderLineItemDAO;
+	private CustomerDAO customerDao;
+	private SaleOrderDAO saleOrderDao;
+	private OrderLineItemDAO orderLineItemDao;
 	private ProductDAO productDao;
 	private StockDAO stockDao;
 	
 	private DBConnection dbConnection;
 
-	public SaleOrderCtrl() throws SQLException {
-		customerCtrl = new CustomerCtrl();
-		productCtrl = new ProductCtrl(productDao, stockDao);
-		saleOrderDAO = new SaleOrderDB();
-		new CustomerDB();
-		new FreightDB();
-		new DiscountDB();
+	public SaleOrderCtrl(CustomerDAO customerDao, ProductDAO productDao, StockDAO stockDao, SaleOrderDAO saleOrderDao, OrderLineItemDAO orderLineItemDao) throws SQLException {
+		this.customerDao = customerDao;
+		this.productDao = productDao;
+		this.stockDao = stockDao;
+		this.saleOrderDao = saleOrderDao;
+		this.orderLineItemDao = orderLineItemDao;
+		
+		this.customerCtrl = new CustomerCtrl(customerDao);
+		this.productCtrl = new ProductCtrl(productDao, stockDao);
 		
 		dbConnection = DBConnection.getInstance();
 	}
@@ -60,11 +63,11 @@ public class SaleOrderCtrl implements SaleOrderCtrlIF{
 	@Override
 	public boolean confirmSaleOrder() throws SQLException {
 		dbConnection.startTransaction();
-		saleOrderDAO.addSaleOrder(currentOrder);
+		saleOrderDao.addSaleOrder(currentOrder);
 		boolean success = false;
 		
 		for(OrderLineItem ol : currentOrder.getOrderLines()) {
-			orderLineItemDAO.addOrderLineItem(ol);
+			orderLineItemDao.addOrderLineItem(ol);
 		success = productCtrl.removeFromStock(currentOrder);
 		
 			if (success){

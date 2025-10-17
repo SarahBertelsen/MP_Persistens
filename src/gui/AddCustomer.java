@@ -9,6 +9,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import ctrl.SaleOrderCtrl;
+import db.CustomerDB;
+import db.OrderLineItemDB;
+import db.ProductDB;
+import db.SaleOrderDB;
+import db.StockDB;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
@@ -27,7 +33,7 @@ public class AddCustomer extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			AddCustomer dialog = new AddCustomer(new SaleOrderCtrl());
+			AddCustomer dialog = new AddCustomer(new SaleOrderCtrl(new CustomerDB(), new ProductDB(), new StockDB(), new SaleOrderDB(), new OrderLineItemDB()));
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

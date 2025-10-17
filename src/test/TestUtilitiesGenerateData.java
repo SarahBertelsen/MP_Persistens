@@ -44,8 +44,8 @@ public class TestUtilitiesGenerateData {
 	}
 	
 	public void generateProducts() throws SQLException {
-		ProductDB pdb = new ProductDB();
-		Product product = new Product(0, "Michael Jackson", "MusicProduct");
+		ProductDB pdb = new ProductDB(); "Michael Jackson", "music"
+		Product product = new MusicProduct(0, );
 		Product product1 = new Product(1, "Linkin Park", "MusicProduct");
 		Product product2 = new Product(2, "Medina", "MusicProduct");
 		product = pdb.addProduct(product);

@@ -7,6 +7,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import ctrl.SaleOrderCtrl;
+import db.CustomerDB;
+import db.OrderLineItemDB;
+import db.ProductDB;
+import db.SaleOrderDB;
+import db.StockDB;
 import model.Customer;
 import model.Freight;
 import model.OrderLineItem;
@@ -54,7 +59,7 @@ public class SaleOrderView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SaleOrderView frame = new SaleOrderView(new SaleOrderCtrl());
+					SaleOrderView frame = new SaleOrderView(new SaleOrderCtrl(new CustomerDB(), new ProductDB(), new StockDB(), new SaleOrderDB(), new OrderLineItemDB()));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
