@@ -32,6 +32,7 @@ class addProductTest {
 		String existingProductName = "The Real Thing";
 		String existingProductType = "music";
 		double existingProductPrice = 2.99;
+		Warehouse existingProductWarehouse = new Warehouse(1, "Lotte", "Lotte's hus");
 		String existingProductFormat = "mp3";
 		String existingProductArtist = "Them";
 		
@@ -40,6 +41,7 @@ class addProductTest {
 				existingProductName,
 				existingProductType,
 				existingProductPrice,
+				existingProductWarehouse,
 				existingProductFormat,
 				existingProductArtist
 				);
@@ -48,6 +50,7 @@ class addProductTest {
 		String nonExistingProductName = "Self Titled";
 		String nonExistingProductType = "music";
 		double nonExistingProductPrice = 910324.009;
+		Warehouse nonExistingProductWarehouse = new Warehouse(3, "Bonny", "Bonny's hus");	
 		String nonExistingProductFormat = "Obelisk";
 		String nonExistingProductArtist = "???";
 		
@@ -56,6 +59,7 @@ class addProductTest {
 				nonExistingProductName,
 				nonExistingProductType,
 				nonExistingProductPrice,
+				nonExistingProductWarehouse,	
 				nonExistingProductFormat,
 				nonExistingProductArtist
 				);

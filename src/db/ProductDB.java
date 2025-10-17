@@ -11,6 +11,7 @@ import model.EquipmentProduct;
 import model.GunReplicaProduct;
 import model.MusicProduct;
 import model.Product;
+import model.Warehouse;
 
 public class ProductDB implements ProductDAO{
 
@@ -76,29 +77,32 @@ public class ProductDB implements ProductDAO{
 		String name = rs.getString(2);
 		String productType = rs.getString(3);
 		double salePrice = rs.getDouble(4);
+		int warehouseId = rs.getInt(5);
+		
+		Warehouse warehouse = new WarehouseDB().findWarehouseById(warehouseId);
 		
 		switch(productType) {
 		case "music":
-			product = buildMusicProduct(productId, name, productType, salePrice);
+			product = buildMusicProduct(productId, name, productType, salePrice, warehouse);
 			break;
 		case "clothing":
-			product = buildClothingProduct(productId, name, productType, salePrice);
+			product = buildClothingProduct(productId, name, productType, salePrice, warehouse);
 			break;
 		case "equipment":
-			product = buildEquipmentProduct(productId, name, productType, salePrice);
+			product = buildEquipmentProduct(productId, name, productType, salePrice, warehouse);
 			break;
 		case "gunReplica":
-			product = buildGunReplicaProduct(productId, name, productType, salePrice);
+			product = buildGunReplicaProduct(productId, name, productType, salePrice, warehouse);
 			break;
 		default:
-			product = new Product(productId, name, productType, salePrice);
+			product = new Product(productId, name, productType, salePrice, warehouse);
 			break;
 		}
 		
 		return product;
 	}
 	
-	private MusicProduct buildMusicProduct(int productId, String name, String productType, double salePrice) throws SQLException {
+	private MusicProduct buildMusicProduct(int productId, String name, String productType, double salePrice, Warehouse warehouse) throws SQLException {
 		MusicProduct musicProduct = null;
 		ResultSet resultSet;
 
@@ -108,12 +112,12 @@ public class ProductDB implements ProductDAO{
 		String format = resultSet.getString(2);
 		String artist = resultSet.getString(3);
 		
-		musicProduct = new MusicProduct(productId, name, productType, salePrice, format, artist);
+		musicProduct = new MusicProduct(productId, name, productType, salePrice, warehouse, format, artist);
 		
 		return musicProduct;
 	}
 
-	private ClothingProduct buildClothingProduct(int productId, String name, String productType, double salePrice) throws SQLException {
+	private ClothingProduct buildClothingProduct(int productId, String name, String productType, double salePrice, Warehouse warehouse) throws SQLException {
 		ClothingProduct clothingProduct = null;
 		ResultSet resultSet;
 
@@ -123,12 +127,12 @@ public class ProductDB implements ProductDAO{
 		String size = resultSet.getString(2);
 		String colour = resultSet.getString(3);
 		
-		clothingProduct = new ClothingProduct(productId, name, productType, salePrice, size, colour);
+		clothingProduct = new ClothingProduct(productId, name, productType, salePrice, warehouse, size, colour);
 		
 		return clothingProduct;
 	}
 
-	private EquipmentProduct buildEquipmentProduct(int productId, String name, String productType, double salePrice) throws SQLException {
+	private EquipmentProduct buildEquipmentProduct(int productId, String name, String productType, double salePrice, Warehouse warehouse) throws SQLException {
 		EquipmentProduct equipmentProduct = null;
 		ResultSet resultSet;
 
@@ -138,12 +142,12 @@ public class ProductDB implements ProductDAO{
 		String material = resultSet.getString(2);
 		String style = resultSet.getString(3);
 		
-		equipmentProduct = new EquipmentProduct(productId, name, productType, salePrice, material, style);
+		equipmentProduct = new EquipmentProduct(productId, name, productType, salePrice, warehouse, material, style);
 		
 		return equipmentProduct;
 	}
 
-	private GunReplicaProduct buildGunReplicaProduct(int productId, String name, String productType, double salePrice) throws SQLException {
+	private GunReplicaProduct buildGunReplicaProduct(int productId, String name, String productType, double salePrice, Warehouse warehouse) throws SQLException {
 		GunReplicaProduct gunReplicaProduct = null;
 		ResultSet resultSet;
 
@@ -153,7 +157,7 @@ public class ProductDB implements ProductDAO{
 		String calibre = resultSet.getString(2);
 		String material = resultSet.getString(3);
 		
-		gunReplicaProduct = new GunReplicaProduct(productId, name, productType, salePrice, calibre, material);
+		gunReplicaProduct = new GunReplicaProduct(productId, name, productType, salePrice, warehouse, calibre, material);
 		
 		return gunReplicaProduct;
 	}

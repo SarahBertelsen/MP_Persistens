@@ -6,12 +6,14 @@ public class Product {
 	private String name;
 	private String productType;
 	private Double salePrice;
+	private Warehouse warehouse;
 	
-	public Product(int productId, String name, String productType, double salePrice) {
+	public Product(int productId, String name, String productType, double salePrice, Warehouse warehouse) {
 		this.productId = productId;
 		this.name = name;
 		this.productType = productType;
 		this.setSalePrice(salePrice);
+		this.setWarehouse(warehouse);
 	}
 
 	public int getProductId() {
@@ -44,6 +46,14 @@ public class Product {
 
 	public void setSalePrice(Double salePrice) {
 		this.salePrice = salePrice;
+	}
+
+	public Warehouse getWarehouse() {
+		return warehouse;
+	}
+
+	public void setWarehouse(Warehouse warehouse) {
+		this.warehouse = warehouse;
 	}
 	
 	

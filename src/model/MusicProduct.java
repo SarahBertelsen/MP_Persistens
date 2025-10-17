@@ -4,8 +4,8 @@ public class MusicProduct extends Product {
 	String format;
 	String artist;
 	
-	public MusicProduct(int productId, String name, String productType, double salePrice, String format, String artist) {
-		super(productId, name, productType, salePrice);
+	public MusicProduct(int productId, String name, String productType, double salePrice, Warehouse warehouse, String format, String artist) {
+		super(productId, name, productType, salePrice, warehouse);
 		this.format = format;
 		this.artist = artist;
 	}

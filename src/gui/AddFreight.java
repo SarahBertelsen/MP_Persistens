@@ -9,6 +9,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import ctrl.SaleOrderCtrl;
+import db.CustomerDB;
+import db.OrderLineItemDB;
+import db.ProductDB;
+import db.SaleOrderDB;
+import db.StockDB;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
@@ -34,7 +39,7 @@ public class AddFreight extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			AddFreight dialog = new AddFreight(new SaleOrderCtrl());
+			AddFreight dialog = new AddFreight(new SaleOrderCtrl(new CustomerDB(), new ProductDB(), new StockDB(), new SaleOrderDB(), new OrderLineItemDB()));
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

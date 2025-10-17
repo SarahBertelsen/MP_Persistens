@@ -35,7 +35,7 @@ public class SaleOrderDB implements SaleOrderDAO {
 	}
 
 	@Override
-	public SaleOrder addSaleOrder(SaleOrder saleOrder) {
+	public SaleOrder addSaleOrder(SaleOrder saleOrder) throws SQLException {
 		int saleOrderId = 0;
 		
 		int freightId = saleOrder.getFreight().getFreightId();
