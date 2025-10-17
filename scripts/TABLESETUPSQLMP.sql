@@ -1,7 +1,7 @@
 USE DMA-CSD-V251_10669007
 
-CREATE Table WareHouse (
-WareHouseId int IDENTITY (1000,1) PRIMARY KEY NOT NULL,
+CREATE Table Warehouse (
+WarehouseId int IDENTITY (1000,1) PRIMARY KEY NOT NULL,
 [Name] varchar(50) NOT NULL,
 Description varchar (1000) NOT NULL
 )
@@ -39,12 +39,6 @@ AvailableQty int NOT NULL,
 ReservedQty int NOT NULL,
 MinStock int NOT NULL
 )
-CREATE table ProductSalePrice (
-ProductId int NOT NULL FOREIGN KEY REFERENCES [Product] (ProductId),
-ProductSalePriceId int IDENTITY (1000,1) PRIMARY KEY NOT NULL,
-[Timestamp] Date UNIQUE NOT NULL,
-Price money Not NULL
-)
 CREATE table Freight (
 FreightId int IDENTITY (1000,1) PRIMARY KEY NOT NULL,
 Method varchar (100) NOT NULL,
@@ -56,12 +50,6 @@ DiscountId int IDENTITY (1000,1) PRIMARY KEY NOT NULL,
 [Type] money NOT NULL,
 DiscountAmount money NOT NULL,
 DiscountThreshold money NOT NULL
-)
-CREATE Table InVoice (
-InvoiceId int IDENTITY (1000,1) PRIMARY KEY NOT NULL,
-PaymentDate date NOT NULL,
-Vat float NOT NULL,
-TotalAmount money
 )
 CREATE table Customer (
 CustomerId int IDENTITY (1000,1) PRIMARY KEY NOT NULL,
