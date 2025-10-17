@@ -48,5 +48,6 @@ public class DBConnection {
 	public void rollbackTransaction() throws SQLException {
 		connection.rollback();
 		connection.setAutoCommit(true);
+		
 	}
 }
