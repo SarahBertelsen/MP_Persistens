@@ -48,8 +48,6 @@ CREATE table Freight (
 FreightId int IDENTITY (1000,1) PRIMARY KEY NOT NULL,
 Method varchar (100) NOT NULL,
 BaseCost money NOT NULL,
-FreeThreshold money NOT NULL,
-DeliveryStatus varchar (100) NOT NULL,
 DeliveryDate varchar (13) NOT NULL,
 )
 CREATE table Discount (
