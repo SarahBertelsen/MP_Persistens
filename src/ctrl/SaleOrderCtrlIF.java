@@ -10,13 +10,14 @@ public interface SaleOrderCtrlIF {
 	
 	public SaleOrder createSaleOrder();
 	
-	public SaleOrder addCustomerToSaleOrder(int customerID);
 	
-	public SaleOrder addFreightToSaleOrder(String method, LocalDate deliveryDate, String address);
+	public SaleOrder addFreight(String method, LocalDate deliveryDate, String address);
 	
 	public boolean confirmSaleOrder() throws SQLException;
 
-	public void addDiscountToSaleOrder(Discount discount);
+	public void addDiscount(Discount discount);
 
-	public SaleOrder addProductToSaleOrder(int productId, int qty, int warehouseId);
+	public SaleOrder addProduct(int productId, int qty, int warehouseId);
+
+	public SaleOrder addCustomer(int customerId);
 }
