@@ -1,5 +1,7 @@
 package ctrl;
 
+import java.sql.SQLException;
+
 import db.CustomerDAO;
 import model.Customer;
 
@@ -7,13 +9,18 @@ public class CustomerCtrl implements CustomerCtrlIF {
 
 	private CustomerDAO customerDao;
 	
-	@Override
-	public Customer findCustomerById(int customerId) {
-		// customerDao.findCustomerById(customerId);
-		return null;
+	public CustomerCtrl(CustomerDAO customerDao) {
+		this.customerDao = customerDao;
 	}
 	
-	private CustomerDAO customerDAO () {
-		return customerDao;
+	@Override
+	public Customer findCustomerById(int customerId) {
+		Customer customer = null;
+		try {
+			customer = customerDao.findCustomerById(customerId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return customer;
 	}
 }
