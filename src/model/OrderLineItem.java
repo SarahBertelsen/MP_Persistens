@@ -12,6 +12,12 @@ public class OrderLineItem {
 		this.qty = qty;
 		this.setSaleOrder(saleOrder);
 	}
+	
+	public OrderLineItem( SaleOrder saleOrder, Product product, int qty) {
+		this.product = product;
+		this.qty = qty;
+		this.setSaleOrder(saleOrder);
+	}
 
 	public Product getProduct() {
 		return product;

@@ -2,12 +2,13 @@ package ctrl;
 
 import java.time.LocalDate;
 
-import db.CustomerDAO;
-import db.DBConnection;
-import db.DiscountDAO;
-import db.FreightDAO;
-import db.SaleOrderDAO;
+import db.*;
+
+
 import model.Customer;
+import model.Discount;
+import model.Freight;
+import model.OrderLineItem;
 import model.Product;
 import model.SaleOrder;
 
@@ -22,6 +23,7 @@ public class SaleOrderCtrl implements SaleOrderCtrlIF{
 	private FreightDAO freightDAO;
 	private DiscountDAO discountDAO;
 	private OrderLineItemDAO orderLineItemDAO;
+	private ProductDAO productDao;
 	
 	private DBConnection dbConnection;
 
@@ -39,22 +41,24 @@ public class SaleOrderCtrl implements SaleOrderCtrlIF{
 	@Override
 	public SaleOrder addCustomerToSaleOrder(int customerId) {
 		Customer customer = customerCtrl.findCustomerById(customerId);
-		currentOrder.addCustomer(customer);
+		currentOrder.setCustomer(customer);
 		return currentOrder;
 	}
 
 	@Override
-	public SaleOrder addProductToSaleOrder(int productId, int qty) {
-		Product product = productController.findById(productId);
-		currentOrder.addProductToSaleOrder(product, qty);
+	public SaleOrder addProductToSaleOrder(int productId, int qty, int warehouseId) {
+		Product product = productCtrl.findProductById(productId, qty, warehouseId);
+		OrderLineItem ol = new OrderLineItem(currentOrder, product, qty);
 		return currentOrder;
 	}
-
+	
 	@Override
-	public boolean confirmOrder() {
+	public boolean confirmSaleOrder() {
 		dbConnection.startTransaction();
 		saleOrderDAO.addSaleOrder(currentOrder);
-		orderLineItemDAO.insertOrderLineItem(orderLineItem);
+		
+		for(OrderLineItem ol : currentOrder.getOrderLines()) {
+			orderLineItemDAO.addOrderLineItem(ol);
 		boolean success = productCtrl.removeFromStock(currentOrder);
 		
 		if (success) {
@@ -74,14 +78,14 @@ public class SaleOrderCtrl implements SaleOrderCtrlIF{
 
 	@Override
 	public SaleOrder addFreightToSaleOrder(String method, LocalDate deliveryDate, String address) {
-		currentOrder.addFreightToSaleOrder(method, deliveryDate, address);
+		Freight freight = new Freight(method, deliveryDate, address);
+		currentOrder.setFreight(freight);
 		return currentOrder;
 	}
 
 	@Override
-	public void addDiscountToSaleOrder() {
-		Discount discount = new Discount();
-		currentOrder.addDiscount(discount);
+	public void addDiscountToSaleOrder(Discount discount) {
+		currentOrder.setDiscount(discount);
 	}
 
 }

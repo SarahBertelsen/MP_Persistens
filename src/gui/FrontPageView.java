@@ -7,9 +7,7 @@ import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 
-import ctrl.CustomerCtrl;
 import ctrl.SaleOrderCtrl;
-import model.SaleOrder;
 
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
@@ -44,6 +42,7 @@ public class FrontPageView {
 	 * Create the application.
 	 */
 	public FrontPageView() {
+		this.soCtrl = new SaleOrderCtrl();
 		initialize();
 	}
 
@@ -51,7 +50,6 @@ public class FrontPageView {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		soCtr = new SaleOrderCtrl();
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

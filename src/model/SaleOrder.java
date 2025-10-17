@@ -21,7 +21,13 @@ public class SaleOrder {
 		this.customer = customer;
 		this.date = date;
 	}
+	
+	public SaleOrder() {}
 
+	public void addProduct(Product product) {
+		
+	}
+	
 	public int getSaleOrderId() {
 		return saleOrderId;
 	}

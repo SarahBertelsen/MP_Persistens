@@ -4,7 +4,10 @@ import java.sql.SQLException;
 
 import db.ProductDAO;
 import db.StockDAO;
+import db.StockDB;
+import model.OrderLineItem;
 import model.Product;
+import model.SaleOrder;
 
 public class ProductCtrl implements ProductCtrlIF {
 
@@ -22,11 +25,10 @@ public class ProductCtrl implements ProductCtrlIF {
 		try {
 			product = productDao.findProductById(productId);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		if (! isProductInStock(product, warehouseId, qty)){
+		if (!isProductInStock(product, warehouseId, qty)){
 			product = null;
 		}
 		
@@ -39,7 +41,6 @@ public class ProductCtrl implements ProductCtrlIF {
 			try {
 				availableQty = stockDao.findAvailableQty(product, warehouseId);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -48,26 +49,35 @@ public class ProductCtrl implements ProductCtrlIF {
 	}
 
 	@Override
-	public boolean removeFromStock(Product product, int warehouseId, int qty) {
+	public boolean removeFromStock(SaleOrder saleOrder) {
+		StockDB stockDb = new StockDB();
 		boolean success = false;
-		int availableQty = 0;
 		try {
-			availableQty = stockDao.findAvailableQty(product, warehouseId);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			for(OrderLineItem ol : SaleOrder.getOrderLines()) {
+				Product product = ol.getProduct();
+				stockDb.get
+				int availableQty = 0;
+				try {
+					availableQty = stockDb.findAvailableQty(product, warehouseId);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+				if (availableQty >= qty) {
+					int postRemoveStock = availableQty - qty;
+					success = true;
+					try {
+						stockDao.setAvailableQty(product, postRemoveStock, warehouseId);
+					} catch (SQLException e) {
+						success = false;
+						e.printStackTrace();
+					}
+				}
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		if (availableQty >= qty) {
-			int postRemoveStock = availableQty - qty;
-			success = true;
-			try {
-				stockDao.setAvailableQty(product, postRemoveStock, warehouseId);
-			} catch (SQLException e) {
-				success = false;
-				e.printStackTrace();
-			}
-		}
 		
 		return success;
 	}

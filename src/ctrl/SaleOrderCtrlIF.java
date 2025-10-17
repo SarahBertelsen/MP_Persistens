@@ -2,6 +2,7 @@ package ctrl;
 
 import java.time.LocalDate;
 
+import model.Discount;
 import model.SaleOrder;
 
 public interface SaleOrderCtrlIF {
@@ -10,11 +11,11 @@ public interface SaleOrderCtrlIF {
 	
 	public SaleOrder addCustomerToSaleOrder(int customerID);
 	
-	public SaleOrder addProductToSaleOrder(int productID, int qty);
-	
 	public SaleOrder addFreightToSaleOrder(String method, LocalDate deliveryDate, String address);
 	
-	public void addDiscountToSaleOrder();
-	
-	public void confirmOrder(SaleOrder saleOrder);
+	public void confirmSaleOrder();
+
+	void addDiscountToSaleOrder(Discount discount);
+
+	SaleOrder addProductToSaleOrder(int productId, int qty, int warehouseId);
 }

@@ -15,6 +15,12 @@ public class Freight {
 		this.deliveryDate = deliveryDate;
 		this.address = address;
 	}
+	
+	public Freight(String method, LocalDate deliveryDate, String address) {
+		this.method = method;
+		this.deliveryDate = deliveryDate;
+		this.address = address;
+	}
 
 	public int getFreightId() {
 		return freightId;

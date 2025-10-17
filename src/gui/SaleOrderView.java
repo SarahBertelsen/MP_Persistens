@@ -339,6 +339,6 @@ public class SaleOrderView extends JFrame {
 	}
 	
 	public void confirmClicked() {
-		soCtrl.confirmOrder();
+		soCtrl.confirmSaleOrder();
 	}
 }
