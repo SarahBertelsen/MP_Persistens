@@ -36,15 +36,6 @@ public class AddProduct extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		try {
-			AddProduct dialog = new AddProduct(new SaleOrderCtrl(new CustomerDB(), new ProductDB(), new StockDB(), new SaleOrderDB(), new OrderLineItemDB()));
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Create the dialog.
@@ -139,6 +130,11 @@ public class AddProduct extends JDialog {
 			}
 		}
 	}
+	
+	public void showDialog() {
+		this.setModal(true);
+		this.setVisible(true);
+	}
 
 	public int getAddedProductId() {
 		String txtProdIdString = txtProdId.getText(); //get String from textfield
@@ -159,9 +155,13 @@ public class AddProduct extends JDialog {
 		return txtWarehouseIdInt;
 	}
 	
-	public void addProductClicked(){
-		SaleOrderView sov = new SaleOrderView(soCtrl); //create new SaleOrderView
-		sov.addProductClicked(); //calls addProduct method in SaleOrderView
-		sov.setVisible(true); //opens SaleOrderView
+	public void addProductClicked() {
+		int productId = getAddedProductId();
+		int qty = getAddedQty();
+		int warehouseId = getAddedWarehouseId();
+		soCtrl.addProduct(productId, qty, warehouseId);
+		
+		this.setVisible(false);
+		this.dispose();
 	}
 }

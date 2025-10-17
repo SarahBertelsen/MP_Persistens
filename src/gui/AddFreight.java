@@ -37,15 +37,6 @@ public class AddFreight extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		try {
-			AddFreight dialog = new AddFreight(new SaleOrderCtrl(new CustomerDB(), new ProductDB(), new StockDB(), new SaleOrderDB(), new OrderLineItemDB()));
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Create the dialog.
@@ -155,9 +146,21 @@ public class AddFreight extends JDialog {
 		return txtAddress.getText();
 	}
 	
+	public void showDialog() {
+		this.setModal(true);
+		this.setVisible(true);
+	}
+	
+	
 	public void addFreightClicked() {
-		SaleOrderView sov = new SaleOrderView(soCtrl);
-		sov.addFreightClicked();
-		sov.setVisible(true);
+		
+		String method = getAddedMethod();
+		LocalDate deliveryDate = getAddedDeliveryDate();
+		String address = getAddedAddress();
+
+		soCtrl.addFreight(method, deliveryDate, address);
+		
+		this.setVisible(false);
+		this.dispose();
 	}
 }

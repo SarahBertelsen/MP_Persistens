@@ -48,7 +48,9 @@ public class SaleOrderCtrl implements SaleOrderCtrlIF{
 	
 	@Override
 	public SaleOrder addCustomer(int customerId) {
+		System.out.println("We got to addCustomer");
 		Customer customer = customerCtrl.findCustomerById(customerId);
+		System.out.println("This is the found customer: " + customer);
 		currentOrder.setCustomer(customer);
 		return currentOrder;
 	}
@@ -89,6 +91,10 @@ public class SaleOrderCtrl implements SaleOrderCtrlIF{
 	@Override
 	public void addDiscount(Discount discount) {
 		currentOrder.setDiscount(discount);
+	}
+	
+	public SaleOrder getCurrentOrder() {
+		return currentOrder;
 	}
 
 }

@@ -106,11 +106,15 @@ public class ProductDB implements ProductDAO{
 		MusicProduct musicProduct = null;
 		ResultSet resultSet;
 
+		
+		
 		selectMusicByIdPS.setInt(1, productId);
 		resultSet = selectMusicByIdPS.executeQuery();
 		
 		String format = resultSet.getString(2);
 		String artist = resultSet.getString(3);
+		
+		System.out.println(productId + " " + name + " " + productType + " " + salePrice + " " + warehouse + " " + format + " " + artist );
 		
 		musicProduct = new MusicProduct(productId, name, productType, salePrice, warehouse, format, artist);
 		

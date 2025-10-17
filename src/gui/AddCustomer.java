@@ -19,6 +19,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Dialog.ModalityType;
+import java.awt.Dialog.ModalExclusionType;
 
 public class AddCustomer extends JDialog {
 
@@ -31,20 +33,24 @@ public class AddCustomer extends JDialog {
 	/**
 	 * Launch the application.
 	 */
+	
+	/**
 	public static void main(String[] args) {
 		try {
-			AddCustomer dialog = new AddCustomer(new SaleOrderCtrl(new CustomerDB(), new ProductDB(), new StockDB(), new SaleOrderDB(), new OrderLineItemDB()));
+			AddCustomer dialog = new AddCustomer();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	} **/
 
 	/**
 	 * Create the dialog.
 	 */
 	public AddCustomer(SaleOrderCtrl soCtrl) {
+		this.soCtrl = soCtrl;
+		setModalityType(ModalityType.APPLICATION_MODAL);
 		this.soCtrl = soCtrl;
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -83,16 +89,21 @@ public class AddCustomer extends JDialog {
 		}
 	}
 	
+	public void showDialog() {
+		this.setModal(true);
+		this.setVisible(true);
+	}
+	
 	public int getAddedCustomerId() {
-		String txtCustomerIdString = txtCustomerId.getText(); //get String from textfield
-		int txtCustomerIdInt = Integer.parseInt(txtCustomerIdString); //parse to int
-		return txtCustomerIdInt;
+		String idString = txtCustomerId.getText();
+		return Integer.parseInt(idString);
 	}
 	
 	public void addCustomerClicked() {
-		SaleOrderView sov = new SaleOrderView(soCtrl);
-		sov.addCustomerClicked();
-		sov.setVisible(true);
+		int customerId = getAddedCustomerId();
+		soCtrl.addCustomer(customerId);
+		this.setVisible(false);
+		this.dispose();
 	}
 
 }

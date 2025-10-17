@@ -152,9 +152,9 @@ public class SaleOrderView extends JFrame {
 		contentPane.add(panel_1, BorderLayout.EAST);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[]{0, 0};
-		gbl_panel_1.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panel_1.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_panel_1.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel_1.setLayout(gbl_panel_1);
 		
 		JLabel cusLbl = new JLabel("Customer");
@@ -266,11 +266,23 @@ public class SaleOrderView extends JFrame {
 		
 		txtAddress = new JTextField();
 		GridBagConstraints gbc_txtAddress = new GridBagConstraints();
+		gbc_txtAddress.insets = new Insets(0, 0, 5, 0);
 		gbc_txtAddress.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtAddress.gridx = 0;
 		gbc_txtAddress.gridy = 14;
 		panel_1.add(txtAddress, gbc_txtAddress);
 		txtAddress.setColumns(10);
+		
+		JButton btnConfirm = new JButton("Confirm");
+		btnConfirm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				confirmClicked();
+			}
+		});
+		GridBagConstraints gbc_btnConfirm = new GridBagConstraints();
+		gbc_btnConfirm.gridx = 0;
+		gbc_btnConfirm.gridy = 16;
+		panel_1.add(btnConfirm, gbc_btnConfirm);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
@@ -281,32 +293,43 @@ public class SaleOrderView extends JFrame {
 
 	}
 
-	public void addCustomerClicked() {
+/**	public void addCustomerClicked(int customerId) {
 		AddCustomer ac = new AddCustomer(soCtrl);
 		ac.setVisible(true);
-		int customerId = ac.getAddedCustomerId();
 		
 		SaleOrder so = soCtrl.addCustomer(customerId);
 		
-		int newCustomerId = so.getCustomer().getCustomerId();
-		String firstName = so.getCustomer().getfName();
-		String lastName = so.getCustomer().getlName();
+		
 		
 		txtCustomerId.setText(String.valueOf(newCustomerId));
 		txtFName.setText(firstName);
 		txtLName.setText(lastName);
 		
+	} **/
+	
+	public void addCustomerClicked() {
+		AddCustomer ac = new AddCustomer(soCtrl);
+		ac.showDialog();
+		
+		SaleOrder so = soCtrl.getCurrentOrder();
+		
+		int customerId = so.getCustomer().getCustomerId();
+		String firstName = so.getCustomer().getfName();
+		String lastName = so.getCustomer().getlName();
+		
+		txtCustomerId.setText(String.valueOf(customerId));
+		txtFName.setText(firstName);
+		txtLName.setText(lastName);
 	}
 	
 	public void addProductClicked() {
-		AddProduct ap = new AddProduct(soCtrl);
-		ap.setVisible(true);
-		int productId = ap.getAddedProductId();
-		int qty = ap.getAddedQty();
-		int warehouseId = ap.getAddedWarehouseId();
 		
-		SaleOrder so = soCtrl.addProduct(productId, qty, warehouseId);
-		displayOrderLine(so);
+		AddProduct ap = new AddProduct(soCtrl);
+		ap.showDialog();
+		
+		SaleOrder so = soCtrl.getCurrentOrder();
+		
+		displayOrderLines(so);
 		updateDisplayPrice(so);
 	}
 	
@@ -321,27 +344,40 @@ public class SaleOrderView extends JFrame {
 		txtTotalCost.setText(Double.toString(totalCost));
 	}
 	
-	public void displayOrderLine(SaleOrder so) {
+	public void displayOrderLines(SaleOrder so) {
 		List<OrderLineItem> orderLines = so.getOrderLines();
 		OrderLineItemTableModel olm = new OrderLineItemTableModel(orderLines);
 		olTable.setModel(olm);
 	}
 	
 	public void addFreightClicked() {
+
 		AddFreight af = new AddFreight(soCtrl);
-		af.setVisible(true);
-		String method = af.getAddedMethod();
-		LocalDate deliveryDate = af.getAddedDeliveryDate();
-		String address = af.getAddedAddress();
+		af.showDialog();
 		
-		SaleOrder so = soCtrl.addFreight(method, deliveryDate, address);
+		SaleOrder so = soCtrl.getCurrentOrder();
+		Freight freight = so.getFreight();
 		
-		txtMethod.setText(method);
-		txtDeliveryDate.setText(deliveryDate.toString());
-		txtAddress.setText(address);
+		txtMethod.setText(freight.getMethod());
+		txtDeliveryDate.setText(freight.getDeliveryDate().toString());
+		txtAddress.setText(freight.getAddress());
+		
 	}
 	
-	public void confirmClicked() throws SQLException {
-		soCtrl.confirmSaleOrder();
+	public void confirmClicked() {
+		boolean success = false;
+		try {
+			success = soCtrl.confirmSaleOrder();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if (success) {
+			dispose();
+		} else {
+			System.out.println("Order was not succesfully added, try again.");
+		}
+		
 	}
 }
