@@ -9,7 +9,7 @@ import java.sql.Statement;
 import model.Warehouse;
 
 public class WarehouseDB implements WarehouseDAO{
-	private static final String SELECT_BY_ID_Q = "SELECT * FROM Warehouse WHERE warehouseId = ?";
+	private static final String SELECT_BY_ID_Q = "SELECT * FROM Warehouse WHERE WarehouseId = ?";
 	private static final String INSERT_Q = "INSERT INTO Customer VALUES (?, ? ?)";
 	private PreparedStatement selectByIdPS;
 	private PreparedStatement insertPS;

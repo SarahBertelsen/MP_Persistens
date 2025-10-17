@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class OrderLineItemDB implements OrderLineItemDAO{
 	private static final String SELECT_BY_SALE_ORDER_ID_Q = "SELECT * FROM OrderLineItem WHERE SaleOrderId = ?";
-	private static final String SELECT_BY_ID_Q = "SELECT * FROM OrderLineItem WHERE orderLineId = ?";
+	private static final String SELECT_BY_ID_Q = "SELECT * FROM OrderLineItem WHERE OrderLineId = ?";
 	private static final String INSERT_Q = "INSERT INTO OrderLineItem VALUES (?, ?, ?, ?)";
 	private PreparedStatement selectBySaleOrderIdPS;
 	private PreparedStatement selectByIdPS;

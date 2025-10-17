@@ -18,7 +18,7 @@ import model.SaleOrder;
 
 public class SaleOrderDB implements SaleOrderDAO {
 	private static final String INSERT_Q = "INSERT INTO SaleOrder VALUES (?, ?, ?, ?, ?)";
-	private static final String FIND_BY_ID_Q = "SELECT * FROM SaleOrder WHERE saleOrderId = ?";
+	private static final String FIND_BY_ID_Q = "SELECT * FROM SaleOrder WHERE SaleOrderId = ?";
 
 	private PreparedStatement insertPS;
 	private PreparedStatement selectByIdPS;

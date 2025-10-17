@@ -9,8 +9,8 @@ import model.Stock;
 
 public class StockDB implements StockDAO{
 
-	private static final String SELECT_BY_ID_Q = "SELECT * FROM Stock WHERE productId = ? AND qarehouseId = ?";
-	private static final String UPDATE_STOCK_Q = "UPDATE Stock SET availableQty = ? WHERE productId = ? AND warehouseId = ?";
+	private static final String SELECT_BY_ID_Q = "SELECT * FROM Stock WHERE ProductId = ? AND WarehouseId = ?";
+	private static final String UPDATE_STOCK_Q = "UPDATE Stock SET AvailableQty = ? WHERE ProductId = ? AND WarehouseId = ?";
 	private static final String INSERT_Q = "INSERT INTO Stock VALUES (?, ?, ?, ?, ?)";
 	
 	private PreparedStatement selectByIdPS;

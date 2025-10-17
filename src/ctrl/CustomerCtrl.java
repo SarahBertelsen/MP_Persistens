@@ -16,5 +16,4 @@ public class CustomerCtrl implements CustomerCtrlIF {
 	private CustomerDAO customerDAO () {
 		return customerDao;
 	}
-
 }
