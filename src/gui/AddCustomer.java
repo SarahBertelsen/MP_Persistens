@@ -27,7 +27,7 @@ public class AddCustomer extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			AddCustomer dialog = new AddCustomer();
+			AddCustomer dialog = new AddCustomer(new SaleOrderCtrl());
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {

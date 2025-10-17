@@ -1,5 +1,6 @@
 package ctrl;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 import model.Discount;
@@ -13,9 +14,9 @@ public interface SaleOrderCtrlIF {
 	
 	public SaleOrder addFreightToSaleOrder(String method, LocalDate deliveryDate, String address);
 	
-	public void confirmSaleOrder();
+	public boolean confirmSaleOrder() throws SQLException;
 
-	void addDiscountToSaleOrder(Discount discount);
+	public void addDiscountToSaleOrder(Discount discount);
 
-	SaleOrder addProductToSaleOrder(int productId, int qty, int warehouseId);
+	public SaleOrder addProductToSaleOrder(int productId, int qty, int warehouseId);
 }

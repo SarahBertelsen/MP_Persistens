@@ -15,6 +15,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class FrontPageView {
@@ -40,8 +41,9 @@ public class FrontPageView {
 
 	/**
 	 * Create the application.
+	 * @throws SQLException 
 	 */
-	public FrontPageView() {
+	public FrontPageView() throws SQLException {
 		this.soCtrl = new SaleOrderCtrl();
 		initialize();
 	}

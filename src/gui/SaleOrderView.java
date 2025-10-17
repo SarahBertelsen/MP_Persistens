@@ -27,6 +27,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.awt.event.ActionEvent;
 
@@ -53,7 +54,7 @@ public class SaleOrderView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SaleOrderView frame = new SaleOrderView();
+					SaleOrderView frame = new SaleOrderView(new SaleOrderCtrl());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -305,13 +306,10 @@ public class SaleOrderView extends JFrame {
 	}
 	
 	public void updateDisplayPrice(SaleOrder so) {
-		SalesPriceDB spdb = new SalePriceDB();
-		double salesPrice = spdb.findSalesPriceByProductId();
-		ArrayList<OrderLineItem> orderLines = so.getOrderLines();
+		List<OrderLineItem> orderLines = so.getOrderLines();
 		double totalCost = 0;
 		for(OrderLineItem ol : orderLines) {
-			int productId = ol.getProduct().getProductId();
-			double price = spdb.findSalesPriceByProductId(productId).getPrice();
+			double price = ol.getProduct().getSalePrice();
 			int qty = ol.getQty();
 			totalCost += price * qty;
 		}
@@ -338,7 +336,7 @@ public class SaleOrderView extends JFrame {
 		txtAddress.setText(address);
 	}
 	
-	public void confirmClicked() {
+	public void confirmClicked() throws SQLException {
 		soCtrl.confirmSaleOrder();
 	}
 }

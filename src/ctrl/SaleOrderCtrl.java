@@ -1,5 +1,6 @@
 package ctrl;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 import db.*;
@@ -19,23 +20,27 @@ public class SaleOrderCtrl implements SaleOrderCtrlIF{
 	private ProductCtrl productCtrl;
 	
 	private SaleOrderDAO saleOrderDAO;
-	private CustomerDAO customerDAO;
-	private FreightDAO freightDAO;
-	private DiscountDAO discountDAO;
 	private OrderLineItemDAO orderLineItemDAO;
 	private ProductDAO productDao;
+	private StockDAO stockDao;
 	
 	private DBConnection dbConnection;
 
-	public SaleOrderCtrl() {
+	public SaleOrderCtrl() throws SQLException {
 		customerCtrl = new CustomerCtrl();
-		productCtrl = new ProductCtrl();
+		productCtrl = new ProductCtrl(productDao, stockDao);
 		saleOrderDAO = new SaleOrderDB();
-		customerDAO = new CustomerDB();
-		freightDAO = new FreightDB();
-		discountDAO = new DiscountDB();
+		new CustomerDB();
+		new FreightDB();
+		new DiscountDB();
 		
 		dbConnection = DBConnection.getInstance();
+	}
+	
+	@Override
+	public SaleOrder createSaleOrder() {
+		currentOrder = new SaleOrder();
+		return currentOrder;
 	}
 	
 	@Override
@@ -53,27 +58,22 @@ public class SaleOrderCtrl implements SaleOrderCtrlIF{
 	}
 	
 	@Override
-	public boolean confirmSaleOrder() {
+	public boolean confirmSaleOrder() throws SQLException {
 		dbConnection.startTransaction();
 		saleOrderDAO.addSaleOrder(currentOrder);
+		boolean success = false;
 		
 		for(OrderLineItem ol : currentOrder.getOrderLines()) {
 			orderLineItemDAO.addOrderLineItem(ol);
-		boolean success = productCtrl.removeFromStock(currentOrder);
+		success = productCtrl.removeFromStock(currentOrder);
 		
-		if (success) {
-			dbConnection.commitTransaction();
-		} else {
-			dbConnection.rollbackTransaction();
+			if (success){
+				dbConnection.commitTransaction();
+			} else {
+				dbConnection.rollbackTransaction();
+			}
 		}
-		
 		return success;
-	}
-
-	@Override
-	public SaleOrder createSaleOrder() {
-		currentOrder = new SaleOrder();
-		return currentOrder;
 	}
 
 	@Override
