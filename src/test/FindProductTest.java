@@ -96,7 +96,7 @@ class addProductTest {
 		Product invalidFoundProduct = pctrl.findProductById(existingProductId, validWarehouseId, invalidQty);
 		Product negativeFoundProduct = pctrl.findProductById(existingProductId, validWarehouseId, negativeQty);
 		Product wrongWarehouseFoundProduct = pctrl.findProductById(existingProductId, invalidWarehouseId, validQty);
-		Product nonExistingFoundproduct = pctrl.findProductById(nonExistingProductId, invalidWarehouseId, validQty);
+		Product nonExistingFoundproduct = pctrl.findProductById(nonExistingProductId, validWarehouseId, validQty);
 		
 		assertNotNull(validFoundProduct, "Didn't find valid product");
 		assertNull(invalidFoundProduct, "Found invalid product");
