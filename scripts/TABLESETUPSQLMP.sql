@@ -1,10 +1,16 @@
 USE DMA-CSD-V251_10669007
 
+CREATE Table WareHouse (
+WareHouseId int IDENTITY (1000,1) PRIMARY KEY NOT NULL,
+[Name] varchar(50) NOT NULL,
+Description varchar (1000) NOT NULL
+)
 CREATE table [Product] (
 ProductId int IDENTITY (1000,1) PRIMARY KEY NOT NULL,
 [Name] varchar(100) NOT NULL,
 ProductType varchar (100) NOT NULL,
-SalePrice money NOT NULL
+SalePrice money NOT NULL,
+WareHouseId int NOT NULL FOREIGN KEY REFERENCES [WareHouse] (WareHouseId)
 )
 CREATE table MusicProduct (
 ProductId int NOT NULL FOREIGN KEY REFERENCES [Product] (ProductId),
@@ -25,11 +31,6 @@ CREATE table GunReplicaProduct(
 ProductId int NOT NULL FOREIGN KEY REFERENCES [Product] (ProductId),
 Calibre varchar (100) NOT NULL,
 Material varchar (100) NOT NULL
-)
-CREATE Table WareHouse (
-WareHouseId int IDENTITY (1000,1) PRIMARY KEY NOT NULL,
-[Name] varchar(50) NOT NULL,
-Description varchar (1000) NOT NULL
 )
 CREATE table Stock (
 StockId int IDENTITY (1000,1) PRIMARY KEY NOT NULL,
@@ -61,10 +62,6 @@ InvoiceId int IDENTITY (1000,1) PRIMARY KEY NOT NULL,
 PaymentDate date NOT NULL,
 Vat float NOT NULL,
 TotalAmount money
-)
-CREATE table City (
-Zipcode varchar (4) PRIMARY KEY NOT NULL,
-CityName varchar (100) NOT NULL
 )
 CREATE table Customer (
 CustomerId int IDENTITY (1000,1) PRIMARY KEY NOT NULL,
