@@ -47,14 +47,14 @@ public class SaleOrderCtrl implements SaleOrderCtrlIF{
 	}
 	
 	@Override
-	public SaleOrder addCustomerToSaleOrder(int customerId) {
+	public SaleOrder addCustomer(int customerId) {
 		Customer customer = customerCtrl.findCustomerById(customerId);
 		currentOrder.setCustomer(customer);
 		return currentOrder;
 	}
 
 	@Override
-	public SaleOrder addProductToSaleOrder(int productId, int qty, int warehouseId) {
+	public SaleOrder addProduct(int productId, int qty, int warehouseId) {
 		Product product = productCtrl.findProductById(productId, qty, warehouseId);
 		OrderLineItem ol = new OrderLineItem(currentOrder, product, qty);
 		return currentOrder;
@@ -80,14 +80,14 @@ public class SaleOrderCtrl implements SaleOrderCtrlIF{
 	}
 
 	@Override
-	public SaleOrder addFreightToSaleOrder(String method, LocalDate deliveryDate, String address) {
+	public SaleOrder addFreight(String method, LocalDate deliveryDate, String address) {
 		Freight freight = new Freight(method, deliveryDate, address);
 		currentOrder.setFreight(freight);
 		return currentOrder;
 	}
 
 	@Override
-	public void addDiscountToSaleOrder(Discount discount) {
+	public void addDiscount(Discount discount) {
 		currentOrder.setDiscount(discount);
 	}
 

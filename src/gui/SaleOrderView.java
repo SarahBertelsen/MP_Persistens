@@ -286,7 +286,7 @@ public class SaleOrderView extends JFrame {
 		ac.setVisible(true);
 		int customerId = ac.getAddedCustomerId();
 		
-		SaleOrder so = soCtrl.addCustomerToSaleOrder(customerId);
+		SaleOrder so = soCtrl.addCustomer(customerId);
 		
 		int newCustomerId = so.getCustomer().getCustomerId();
 		String firstName = so.getCustomer().getfName();
@@ -305,7 +305,7 @@ public class SaleOrderView extends JFrame {
 		int qty = ap.getAddedQty();
 		int warehouseId = ap.getAddedWarehouseId();
 		
-		SaleOrder so = soCtrl.addProductToSaleOrder(productId, qty, warehouseId);
+		SaleOrder so = soCtrl.addProduct(productId, qty, warehouseId);
 		displayOrderLine(so);
 		updateDisplayPrice(so);
 	}
@@ -334,7 +334,7 @@ public class SaleOrderView extends JFrame {
 		LocalDate deliveryDate = af.getAddedDeliveryDate();
 		String address = af.getAddedAddress();
 		
-		SaleOrder so = soCtrl.addFreightToSaleOrder(method, deliveryDate, address);
+		SaleOrder so = soCtrl.addFreight(method, deliveryDate, address);
 		
 		txtMethod.setText(method);
 		txtDeliveryDate.setText(deliveryDate.toString());
