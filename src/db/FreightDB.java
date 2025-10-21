@@ -13,7 +13,7 @@ import model.Product;
 
 public class FreightDB implements FreightDAO{
 	private static final String FIND_BY_ID_Q = "SELECT * FROM Freight WHERE FreightId = ?";
-	private static final String INSERT_Q = "INSERT INTO Freight VALUES (?, ?, ?, ?)";
+	private static final String INSERT_Q = "INSERT INTO Freight (Method, DeliveryDate, Address) VALUES (?, ?, ?)";
 	
 	private PreparedStatement selectByIdPS;
 	private PreparedStatement insertPS;
@@ -47,9 +47,9 @@ public class FreightDB implements FreightDAO{
 	@Override
 	public void addFreight(Freight freight) throws SQLException {
 		int freightId = 0;
-		insertPS.setString(2, freight.getMethod());
-		insertPS.setDate(3, java.sql.Date.valueOf(freight.getDeliveryDate()));
-		insertPS.setString(4,  freight.getAddress());
+		insertPS.setString(1, freight.getMethod());
+		insertPS.setDate(2, java.sql.Date.valueOf(freight.getDeliveryDate()));
+		insertPS.setString(3,  freight.getAddress());
 		insertPS.executeUpdate();
 		
 		ResultSet keyRS = insertPS.getGeneratedKeys();

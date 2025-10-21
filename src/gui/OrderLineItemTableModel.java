@@ -13,7 +13,7 @@ public class OrderLineItemTableModel extends AbstractTableModel{
     private String[] COL_NAMES = { "Id", "Name", "Type", "Quantity" };
 
     public OrderLineItemTableModel(List<OrderLineItem> orderLines) {
-        orderLines = new ArrayList<>(orderLines);
+        this.orderLines = orderLines;
     }
 
     @Override

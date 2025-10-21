@@ -15,6 +15,7 @@ import db.StockDB;
 import model.Customer;
 import model.Freight;
 import model.OrderLineItem;
+import model.Product;
 import model.SaleOrder;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
@@ -337,7 +338,8 @@ public class SaleOrderView extends JFrame {
 		List<OrderLineItem> orderLines = so.getOrderLines();
 		double totalCost = 0;
 		for(OrderLineItem ol : orderLines) {
-			double price = ol.getProduct().getSalePrice();
+			Product product = ol.getProduct();
+			double price = product.getSalePrice();
 			int qty = ol.getQty();
 			totalCost += price * qty;
 		}

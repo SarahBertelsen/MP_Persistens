@@ -57,14 +57,18 @@ public class SaleOrderCtrl implements SaleOrderCtrlIF{
 
 	@Override
 	public SaleOrder addProduct(int productId, int qty, int warehouseId) {
+		System.out.println("this is the warehouse id: " + warehouseId);
 		Product product = productCtrl.findProductById(productId, qty, warehouseId);
 		OrderLineItem ol = new OrderLineItem(currentOrder, product, qty);
+		System.out.println("this is the product added to the orderline " + ol.getProduct());
+		currentOrder.addOrderLine(ol);
 		return currentOrder;
 	}
 	
 	@Override
 	public boolean confirmSaleOrder() throws SQLException {
 		dbConnection.startTransaction();
+		
 		saleOrderDao.addSaleOrder(currentOrder);
 		boolean success = false;
 		

@@ -11,7 +11,7 @@ import model.Discount;
 
 public class DiscountDB implements DiscountDAO {
 
-	private static final String INSERT_Q = "INSERT INTO Discount VALUES (?, ?, ?, ?)";
+	private static final String INSERT_Q = "INSERT INTO Discount (Type, Amount, Treshold) VALUES (?, ?, ?)";
 	private static final String SELECT_BY_ID_Q = "SELECT * FROM Discount WHERE DiscountId = ?";
 	private PreparedStatement insertPS;
 	private PreparedStatement selectByIdPS;
@@ -49,9 +49,9 @@ public class DiscountDB implements DiscountDAO {
 	@Override
 	public Discount addDiscount(Discount discount) throws SQLException{
 		int discountId = 0;
-		insertPS.setString(2, discount.getType());
-		insertPS.setDouble(3, discount.getAmount());
-		insertPS.setDouble(4, discount.getTreshold());
+		insertPS.setString(1, discount.getType());
+		insertPS.setDouble(2, discount.getAmount());
+		insertPS.setDouble(3, discount.getTreshold());
 		insertPS.executeUpdate();
 		
 		ResultSet keyRS = insertPS.getGeneratedKeys();

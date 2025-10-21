@@ -49,7 +49,6 @@ public class AddCustomer extends JDialog {
 	 * Create the dialog.
 	 */
 	public AddCustomer(SaleOrderCtrl soCtrl) {
-		this.soCtrl = soCtrl;
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		this.soCtrl = soCtrl;
 		setBounds(100, 100, 450, 300);

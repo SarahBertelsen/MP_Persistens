@@ -35,9 +35,11 @@ public class StockDB implements StockDAO{
 		selectByIdPS.setInt(1, product.getProductId()); //sæt productId
 		selectByIdPS.setInt(2, warehouseId); //sæt warehouseId
 		rs = selectByIdPS.executeQuery(); //udfør transaktion
+		System.out.println("ProductId=" + product.getProductId() + " WarehouseId=" + warehouseId);
 		
 		if(rs.next()) {
-			availableQty = rs.getInt("availableQty");
+			availableQty = rs.getInt("AvailableQty");
+			System.out.println("post queue available qty: " + availableQty);
 		}
 		return availableQty;
 	}

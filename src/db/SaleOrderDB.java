@@ -17,7 +17,7 @@ import model.OrderLineItem;
 import model.SaleOrder;
 
 public class SaleOrderDB implements SaleOrderDAO {
-	private static final String INSERT_Q = "INSERT INTO SaleOrder VALUES (?, ?, ?, ?, ?)";
+	private static final String INSERT_Q = "INSERT INTO SaleOrder (freightId, discountId, customerId, orderDate) VALUES (?, ?, ?, ?)";
 	private static final String FIND_BY_ID_Q = "SELECT * FROM SaleOrder WHERE SaleOrderId = ?";
 
 	private PreparedStatement insertPS;
@@ -38,14 +38,17 @@ public class SaleOrderDB implements SaleOrderDAO {
 	public SaleOrder addSaleOrder(SaleOrder saleOrder) throws SQLException {
 		int saleOrderId = 0;
 		
+		new FreightDB().addFreight(saleOrder.getFreight());
+		new DiscountDB().addDiscount(saleOrder.getDiscount());
+		
 		int freightId = saleOrder.getFreight().getFreightId();
 		int discountId = saleOrder.getDiscount().getDiscountId();
 		int customerId = saleOrder.getCustomer().getCustomerId();
 		
-		insertPS.setInt(2, freightId);
-		insertPS.setInt(3, discountId);
-		insertPS.setInt(4, customerId);
-		insertPS.setDate(5, Date.valueOf(LocalDate.now()));
+		insertPS.setInt(1, freightId);
+		insertPS.setInt(2, discountId);
+		insertPS.setInt(3, customerId);
+		insertPS.setDate(4, Date.valueOf(LocalDate.now()));
 
 		insertPS.executeUpdate();
 		

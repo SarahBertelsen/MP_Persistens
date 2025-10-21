@@ -20,13 +20,17 @@ public class ProductCtrl implements ProductCtrlIF {
 	}
 
 	@Override
-	public Product findProductById(int productId, int warehouseId, int qty) {
+	public Product findProductById(int productId, int qty,  int warehouseId) {
 		Product product = null;
+		System.out.println("fidnProductById Warehouse Id: " + warehouseId);
+		
 		try {
 			product = productDao.findProductById(productId);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		System.out.println("is product in stock: " + isProductInStock(product, warehouseId, qty));
 		
 		if (!isProductInStock(product, warehouseId, qty)){
 			product = null;
@@ -37,6 +41,7 @@ public class ProductCtrl implements ProductCtrlIF {
 	
 	private boolean isProductInStock(Product product, int warehouseId, int qty) {
 		int availableQty = 0;
+		System.out.println("product found in isProductInStock: " + product);
 		if (product != null) {
 			try {
 				availableQty = stockDao.findAvailableQty(product, warehouseId);

@@ -109,7 +109,13 @@ public class ProductDB implements ProductDAO{
 		
 		
 		selectMusicByIdPS.setInt(1, productId);
+		System.out.println("select music prepared statement set");
+		
 		resultSet = selectMusicByIdPS.executeQuery();
+		
+		System.out.println("music resultset found");
+		
+		resultSet.next();
 		
 		String format = resultSet.getString(2);
 		String artist = resultSet.getString(3);
@@ -128,6 +134,8 @@ public class ProductDB implements ProductDAO{
 		selectClothingByIdPS.setInt(1, productId);
 		resultSet = selectClothingByIdPS.executeQuery();
 		
+		resultSet.next();
+		
 		String size = resultSet.getString(2);
 		String colour = resultSet.getString(3);
 		
@@ -143,6 +151,8 @@ public class ProductDB implements ProductDAO{
 		selectEquipmentByIdPS.setInt(1, productId);
 		resultSet = selectEquipmentByIdPS.executeQuery();
 		
+		resultSet.next();
+		
 		String material = resultSet.getString(2);
 		String style = resultSet.getString(3);
 		
@@ -157,6 +167,8 @@ public class ProductDB implements ProductDAO{
 
 		selectGunReplicaByIdPS.setInt(1, productId);
 		resultSet = selectGunReplicaByIdPS.executeQuery();
+		
+		resultSet.next();
 		
 		String calibre = resultSet.getString(2);
 		String material = resultSet.getString(3);

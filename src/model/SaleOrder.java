@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SaleOrder {
@@ -22,7 +23,10 @@ public class SaleOrder {
 		this.date = date;
 	}
 	
-	public SaleOrder() {}
+	public SaleOrder() {
+		orderLines = new ArrayList<>();
+		discount = new Discount(2, "big count", 0.2, 2000);
+	}
 
 	public void addProduct(Product product) {
 		
