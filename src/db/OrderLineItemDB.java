@@ -9,9 +9,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class OrderLineItemDB implements OrderLineItemDAO{
-	private static final String SELECT_BY_SALE_ORDER_ID_Q = "SELECT * FROM OrderLineItem WHERE SaleOrderId = ?";
-	private static final String SELECT_BY_ID_Q = "SELECT * FROM OrderLineItem WHERE OrderLineId = ?";
-	private static final String INSERT_Q = "INSERT INTO OrderLineItem VALUES (?, ?, ?, ?)";
+	private static final String SELECT_BY_SALE_ORDER_ID_Q = "SELECT * FROM OrderLines WHERE SaleOrder = ?";
+	private static final String SELECT_BY_ID_Q = "SELECT * FROM OrderLines WHERE OrderLineId = ?";
+	private static final String INSERT_Q = "INSERT INTO OrderLines (SaleOrder, ProductId, Quantity) VALUES (?, ?, ?)";
 	private PreparedStatement selectBySaleOrderIdPS;
 	private PreparedStatement selectByIdPS;
 	private PreparedStatement insertPS;
@@ -34,9 +34,9 @@ public class OrderLineItemDB implements OrderLineItemDAO{
 		int productId = ol.getProduct().getProductId();
 		int quantity = ol.getQty();
 		
-		insertPS.setInt(2, saleOrderId);
-		insertPS.setInt(3, productId);
-		insertPS.setInt(4, quantity);
+		insertPS.setInt(1, saleOrderId);
+		insertPS.setInt(2, productId);
+		insertPS.setInt(3, quantity);
 
 		insertPS.executeUpdate();
 		ResultSet keyRS = insertPS.getGeneratedKeys();

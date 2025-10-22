@@ -1,5 +1,6 @@
 package db;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +12,7 @@ import model.Discount;
 
 public class DiscountDB implements DiscountDAO {
 
-	private static final String INSERT_Q = "INSERT INTO Discount (Type, Amount, Treshold) VALUES (?, ?, ?)";
+	private static final String INSERT_Q = "INSERT INTO Discount (Type, DiscountAmount, DiscountThreshold) VALUES (?, ?, ?)";
 	private static final String SELECT_BY_ID_Q = "SELECT * FROM Discount WHERE DiscountId = ?";
 	private PreparedStatement insertPS;
 	private PreparedStatement selectByIdPS;
@@ -49,9 +50,9 @@ public class DiscountDB implements DiscountDAO {
 	@Override
 	public Discount addDiscount(Discount discount) throws SQLException{
 		int discountId = 0;
-		insertPS.setString(1, discount.getType());
-		insertPS.setDouble(2, discount.getAmount());
-		insertPS.setDouble(3, discount.getTreshold());
+		insertPS.setBigDecimal(1, new BigDecimal(2));
+		insertPS.setBigDecimal(2, new BigDecimal(discount.getAmount()));
+		insertPS.setBigDecimal(3, new BigDecimal(discount.getTreshold()));
 		insertPS.executeUpdate();
 		
 		ResultSet keyRS = insertPS.getGeneratedKeys();
